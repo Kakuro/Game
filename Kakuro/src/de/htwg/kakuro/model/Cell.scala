@@ -17,5 +17,5 @@ class Cell(row: Int, column: Int) extends AbstractCell {
 	def ==(v: Int) = if (value == v) true else false
 	
 	def celltoString = "Visible cell (" + row + ", " + column + ") with Value = " + value
-	override def toString = value.toString.replaceAll("^0", " ")
+	override def toString = value.toString.replaceAll("^0", "")
 }

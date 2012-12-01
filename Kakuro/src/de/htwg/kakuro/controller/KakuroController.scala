@@ -8,8 +8,8 @@ import _root_.de.htwg.kakuro.model.Cell
 import _root_.de.htwg.kakuro.model.SumCell
 
 case class ChangeCell extends Event
-case class NewPlayField(fileName: String) extends Event
-case class FalseCell(result: String) extends Event
+case class NewPlayField extends Event
+case class CheckCell(result: String) extends Event
 
 class KakuroController(var model: PlayField) extends Publisher {
 
@@ -21,13 +21,12 @@ class KakuroController(var model: PlayField) extends Publisher {
 	}
 
 	def check = {
-		model.check.foreach(arg => publish(new FalseCell(arg)))
-		publish(new ChangeCell)
+		model.check.foreach(arg => publish(new CheckCell(arg)))
 	}
 
 	def load(name: String) = {
 		model.load(name)
-		publish(new NewPlayField(name))
+		publish(new NewPlayField)
 	}
 	
 	def setValue(row: Int, column: Int, value: Int){

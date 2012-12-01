@@ -19,7 +19,7 @@ class SumCell(row: Int, column: Int, row_Sum: Int, column_Sum: Int) extends Abst
 	
 	def celltoString = "Cell (" + row + ", " + column + ") with row sum = " + row_Sum + " and column sum = " + column_Sum
 
-	private def toString_Row = row_Sum.toString.replaceAll("^0", " ")
-	private def toString_Column = column_Sum.toString.replaceAll("^0", " ")
+	private def toString_Row = row_Sum.toString.replaceAll("^0", "")
+	private def toString_Column = column_Sum.toString.replaceAll("^0", "")
 	override def toString = toString_Row + "\\" + toString_Column
 }

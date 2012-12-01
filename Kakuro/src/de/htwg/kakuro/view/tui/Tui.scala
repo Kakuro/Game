@@ -3,7 +3,7 @@ package de.htwg.kakuro.view.tui
 import de.htwg.kakuro.controller.KakuroController
 import de.htwg.kakuro.controller.ChangeCell
 import de.htwg.kakuro.controller.NewPlayField
-import de.htwg.kakuro.controller.FalseCell
+import de.htwg.kakuro.controller.CheckCell
 import scala.swing._
 import de.htwg.kakuro.model.PlayField
 
@@ -16,7 +16,7 @@ class Tui(var controller: KakuroController) extends Reactor {
 	reactions += {
 		case e: ChangeCell => update
 		case e: NewPlayField => update
-		case e: FalseCell => println(e.result)
+		case e: CheckCell => println(e.result)
 	}
 
 	def update = {
