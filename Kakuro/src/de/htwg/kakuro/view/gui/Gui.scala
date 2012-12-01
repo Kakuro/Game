@@ -17,6 +17,7 @@ import _root_.de.htwg.kakuro.model.SumCell
 import de.htwg.kakuro.controller.ChangeCell
 import scala.collection.mutable.ListBuffer
 import scala.io.Position
+import java.awt.Font
 
 class Gui(controller: KakuroController) extends Frame {
 	listenTo(controller)
@@ -32,39 +33,40 @@ class Gui(controller: KakuroController) extends Frame {
 	title = "Kakuro"
 	iconImage = toolkit.getImage("data/icon.png")
 
-	// add ListView
+	// add ComboBox for look and feel 
 	val list = new ListBuffer[String]()
 	for (info <- javax.swing.UIManager.getInstalledLookAndFeels)
 		list += info.getClassName()
-	val listView = new ListView(list) {
-		listenTo(mouse.clicks)
+
+	val comboBox = new ComboBox(list) {
+		listenTo(selection)
 		reactions += {
-			case e: MouseClicked => {
-				println(e)
+			case e: SelectionChanged => {
+				val selected = selection.item
+				try { javax.swing.UIManager.setLookAndFeel(selected) }
+				catch { case _ => javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName()); }
+				drawNew
 			}
 		}
-	}
-	val scrollPane = new ScrollPane()
-	scrollPane.contents = listView
 
-	// Look and Feel
-	try {
-		javax.swing.UIManager.setLookAndFeel(new javax.swing.plaf.metal.MetalLookAndFeel)
-	} catch {
-		case _ => javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
 	}
 
 	var cells = Array.ofDim[TextField](controller.model.row__, controller.model.column__)
 
 	// creating the grid panel for the play field
 	def gridPanel = new GridPanel(controller.model.row__, controller.model.column__) {
-		border = LineBorder(java.awt.Color.CYAN, 4)
-		//		background = java.awt.Color.RED
 		contents.clear
+		border = LineBorder(java.awt.Color.BLACK, 30)
+		background = java.awt.Color.BLACK
+
 		for (row <- 0 until controller.model.row__; column <- 0 until controller.model.column__) {
 
 			cells(row)(column) = new TextField
-			cells(row)(column).horizontalAlignment = Alignment.Left
+			cells(row)(column).horizontalAlignment = Alignment.Center
+			cells(row)(column).border = LineBorder(java.awt.Color.GRAY, 5)
+			cells(row)(column).foreground = java.awt.Color.GRAY
+			cells(row)(column).font = new Font("Serif", Font.ITALIC | Font.BOLD, 30)
+
 			controller.model.cells(row)(column) match {
 				case c: Cell => {
 					cells(row)(column).text = c.toString
@@ -77,8 +79,7 @@ class Gui(controller: KakuroController) extends Frame {
 					cells(row)(column).name = "SumCell " + row + "," + column
 				}
 				case _ => {
-					cells(row)(column).background = java.awt.Color.BLACK
-					cells(row)(column).editable = false
+					cells(row)(column).visible = false
 					cells(row)(column).name = "-- " + row + "," + column
 				}
 			}
@@ -106,11 +107,6 @@ class Gui(controller: KakuroController) extends Frame {
 		}
 	}
 
-	contents = new BorderPanel {
-		add(scrollPane, BorderPanel.Position.South)
-		add(gridPanel, BorderPanel.Position.Center)
-	}
-
 	// creating a menu Bar
 	menuBar = new MenuBar {
 		contents += new Menu("File") {
@@ -135,11 +131,9 @@ class Gui(controller: KakuroController) extends Frame {
 		}
 	}
 
-	visible = true
-
 	reactions += {
-		case e: ChangeCell => repaint
-		case e: NewPlayField => repaint
+		case e: ChangeCell => drawNew
+		case e: NewPlayField => drawNew
 		case e: CheckCell => {
 
 			val cellFalseRow = "False row ([1-9]*[0-9]*[0-9]), column from ([1-9]*[0-9]*[0-9]) to ([1-9]*[0-9]*[0-9])".r
@@ -159,18 +153,26 @@ class Gui(controller: KakuroController) extends Frame {
 						cells(row.toInt)(column).background = java.awt.Color.RED
 						cells(row.toInt)(column).repaint
 					}
-				case cellFalseColumn(column, rowFrom, rowTo) =>
-				case cellTrueRow(row, columnFrom, columnTo) =>
-				case cellTrueColumn(column, rowFrom, rowTo) =>
-				case cellMultipleRow(row, columnFrom, columnTo) =>
-				case cellMultipleColumn(column, rowFrom, rowTo) =>
+				case cellFalseColumn(column, rowFrom, rowTo) => //@todo
+				case cellTrueRow(row, columnFrom, columnTo) => //@todo
+				case cellTrueColumn(column, rowFrom, rowTo) => //@todo
+				case cellMultipleRow(row, columnFrom, columnTo) => //@todo
+				case cellMultipleColumn(column, rowFrom, rowTo) => //@todo
 				case _ =>
 			})
 		}
 	}
 
-	override def repaint {
+	contents = new BorderPanel {
+		add(comboBox, BorderPanel.Position.South)
+		add(gridPanel, BorderPanel.Position.Center)
+	}
+
+	visible = true
+
+	def drawNew {
 		contents = new BorderPanel {
+			add(comboBox, BorderPanel.Position.South)
 			add(gridPanel, BorderPanel.Position.Center)
 		}
 	}
