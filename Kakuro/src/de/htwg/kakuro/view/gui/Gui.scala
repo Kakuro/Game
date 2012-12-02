@@ -18,6 +18,9 @@ import de.htwg.kakuro.controller.ChangeCell
 import scala.collection.mutable.ListBuffer
 import scala.io.Position
 import java.awt.Font
+import javax.swing.Timer
+import java.util.Timer
+import Swing._
 
 class Gui(controller: KakuroController) extends Frame {
 	listenTo(controller)
@@ -131,6 +134,21 @@ class Gui(controller: KakuroController) extends Frame {
 		}
 	}
 
+	def helpCheck(rowOr: Boolean, rowOrColumn: Int, from: Int, to: Int, color: java.awt.Color) {
+
+		if (rowOr) {
+			for (column <- from until to + 1) {
+				cells(rowOrColumn)(column).background = color
+				cells(rowOrColumn)(column).repaint
+			}
+		} else {
+			for (row <- from until to + 1) {
+				cells(row)(rowOrColumn).background = color
+				cells(row)(rowOrColumn).repaint
+			}
+		}
+	}
+
 	reactions += {
 		case e: ChangeCell => drawNew
 		case e: NewPlayField => drawNew
@@ -143,27 +161,48 @@ class Gui(controller: KakuroController) extends Frame {
 			val cellTrueColumn = "True column ([1-9]*[0-9]*[0-9]), row from ([1-9]*[0-9]*[0-9]) to ([1-9]*[0-9]*[0-9])".r
 
 			val cellMultipleRow = "Multiple number: row ([1-9]*[0-9]*[0-9]), column from ([1-9]*[0-9]*[0-9]) to ([1-9]*[0-9]*[0-9])".r
-			val cellMultipleColumn = "Multiple number:  column ([1-9]*[0-9]*[0-9]), row from ([1-9]*[0-9]*[0-9]) to ([1-9]*[0-9]*[0-9])".r
+			val cellMultipleColumn = "Multiple number: column ([1-9]*[0-9]*[0-9]), row from ([1-9]*[0-9]*[0-9]) to ([1-9]*[0-9]*[0-9])".r
 
 			e.result.split("	").toList.filter(c => c != ' ').map(c => c match {
-				case cellFalseRow(row, columnFrom, columnTo) =>
-
-					for (column <- columnFrom.toInt until columnTo.toInt + 1) {
-
-						cells(row.toInt)(column).background = java.awt.Color.RED
-						cells(row.toInt)(column).repaint
-					}
-				case cellFalseColumn(column, rowFrom, rowTo) => //@todo
-				case cellTrueRow(row, columnFrom, columnTo) => //@todo
-				case cellTrueColumn(column, rowFrom, rowTo) => //@todo
-				case cellMultipleRow(row, columnFrom, columnTo) => //@todo
-				case cellMultipleColumn(column, rowFrom, rowTo) => //@todo
+				case cellFalseRow(row, columnFrom, columnTo) => helpCheck(true, row.toInt, columnFrom.toInt, columnTo.toInt, java.awt.Color.RED)
+				case cellFalseColumn(column, rowFrom, rowTo) => helpCheck(false, column.toInt, rowFrom.toInt, rowTo.toInt, java.awt.Color.RED)
+				case cellTrueRow(row, columnFrom, columnTo) => helpCheck(true, row.toInt, columnFrom.toInt, columnTo.toInt, java.awt.Color.GREEN)
+				case cellTrueColumn(column, rowFrom, rowTo) => helpCheck(false, column.toInt, rowFrom.toInt, rowTo.toInt, java.awt.Color.GREEN)
+				case cellMultipleRow(row, columnFrom, columnTo) => helpCheck(true, row.toInt, columnFrom.toInt, columnTo.toInt, java.awt.Color.ORANGE)
+				case cellMultipleColumn(column, rowFrom, rowTo) => helpCheck(false, column.toInt, rowFrom.toInt, rowTo.toInt, java.awt.Color.ORANGE)
 				case _ =>
 			})
 		}
 	}
 
+	// BoxPanel on the top with two buttons and a label
+	val boxPanel = new BoxPanel(Orientation.Horizontal) {
+		var timeStamp = 0;
+		background = java.awt.Color.BLACK
+
+		// timer
+		val label = new Label { Alignment.Right; foreground = java.awt.Color.WHITE }
+		val timerlistener = new java.awt.event.ActionListener() {
+			def actionPerformed(evt: java.awt.event.ActionEvent) {
+				timeStamp += 1
+				label.text = "Time : " + timeStamp.toString + " sec."
+			}
+		}
+		val timer = new javax.swing.Timer(1000, timerlistener)
+		timer.start()
+
+		contents += new Button(Action("Check") { controller.check })
+		contents += Swing.HStrut(20)
+		contents += new Button(Action("Reset") { controller.reset; timeStamp = 0 })
+		contents += Swing.HStrut(20)
+		contents += label
+		//				contents += new Table(3, 3)
+		border = Swing.EmptyBorder(10, 10, 10, 10)
+//		border = LineBorder(java.awt.Color.RED, 10)
+	}
+
 	contents = new BorderPanel {
+		add(boxPanel, BorderPanel.Position.North)
 		add(comboBox, BorderPanel.Position.South)
 		add(gridPanel, BorderPanel.Position.Center)
 	}
@@ -172,6 +211,7 @@ class Gui(controller: KakuroController) extends Frame {
 
 	def drawNew {
 		contents = new BorderPanel {
+			add(boxPanel, BorderPanel.Position.North)
 			add(comboBox, BorderPanel.Position.South)
 			add(gridPanel, BorderPanel.Position.Center)
 		}

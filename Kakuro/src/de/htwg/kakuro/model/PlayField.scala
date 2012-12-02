@@ -19,15 +19,15 @@ class PlayField() {
 	def reset = {
 		for (row <- 0 until row__; column <- 0 until column__) {
 			cells(row)(column) match {
-				case c : Cell => c <== 0
-				case c : SumCell => // do nothing
+				case c: Cell => c <== 0
+				case c: SumCell => // do nothing
 				case _ => // do nothing
 			}
 		}
 	}
 
 	// checking the complete field with corresponding sums
-	def check : ListBuffer[String] = {
+	def check: ListBuffer[String] = {
 		var sum = 0
 		var tempSum = 0
 		var coutHelp = 0;
@@ -40,11 +40,11 @@ class PlayField() {
 		for (row <- 0 until row__) {
 			for (column <- 0 until column__) {
 				cells(row)(column) match {
-					case c : Cell =>
-						tempSum += c.value
-						arraySum(column) = c.value
-						coutHelp += 1
-					case c : SumCell => {
+					case c: Cell =>
+							tempSum += c.value
+							arraySum(column) = c.value
+							coutHelp += 1
+					case c: SumCell => {
 						if (tempSum != 0) {
 
 							var cout = 0
@@ -110,11 +110,11 @@ class PlayField() {
 		for (column <- 0 until column__) {
 			for (row <- 0 until row__) {
 				cells(row)(column) match {
-					case c : Cell =>
-						tempSum += c.value
-						arraySum(row) = c.value
-						coutHelp += 1
-					case c : SumCell => {
+					case c: Cell =>
+							tempSum += c.value
+							arraySum(row) = c.value
+							coutHelp += 1
+					case c: SumCell => {
 						if (tempSum != 0) {
 
 							var cout = 0
@@ -175,7 +175,7 @@ class PlayField() {
 		result
 	}
 
-	def load(name : String) = {
+	def load(name: String) = {
 		val rowCount = "#/(.*)".r
 		val columnCount = "(.*)/#".r
 		val column_row_Count = "(.*)/(.*)".r
@@ -193,9 +193,9 @@ class PlayField() {
 					case "##" =>
 						cells(row)(column) = new Cell(row, column)
 						column += 1
-					case cellVal(value) => 
+					case cellVal(value) =>
 						cells(row)(column) = new Cell(row, column)
-						cells(row)(column) match {case c: Cell => c <== value.toInt}
+						cells(row)(column) match { case c: Cell => c <== value.toInt }
 						column += 1
 					case size_(row_, column_) =>
 						cells = Array.ofDim[AbstractCell](row_.toInt, column_.toInt)
@@ -217,7 +217,7 @@ class PlayField() {
 				column = 0
 			}
 		catch {
-			case e : java.io.FileNotFoundException => println("File not found or pathname is false.")
+			case e: java.io.FileNotFoundException => println("File not found or pathname is false.")
 		}
 	}
 
@@ -226,8 +226,8 @@ class PlayField() {
 		cells.foreach { row =>
 			row.foreach { column =>
 				column match {
-					case c : Cell => result += c.toString + "\t"
-					case c : SumCell => result += c.toString + "\t"
+					case c: Cell => result += c.toString + "\t"
+					case c: SumCell => result += c.toString + "\t"
 					case _ => result += " --\t"
 				}
 				result += "|"
