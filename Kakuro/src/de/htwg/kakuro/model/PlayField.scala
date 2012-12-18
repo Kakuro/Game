@@ -30,148 +30,203 @@ class PlayField() {
 	def check: ListBuffer[String] = {
 		var sum = 0
 		var tempSum = 0
-		var coutHelp = 0;
 		var arraySum = new Array[Int](column__)
+		var resultTrue = new ListBuffer[String]
+		var resultFalse = new ListBuffer[String]
+		var resultMultple = new ListBuffer[String]
 		var result = new ListBuffer[String]
 		var tempColumn = 0
 		var tempRow = 0
+		var isCellValid = true
 
 		// check all rows
 		for (row <- 0 until row__) {
 			for (column <- 0 until column__) {
 				cells(row)(column) match {
 					case c: Cell =>
-							tempSum += c.value
-							arraySum(column) = c.value
-							coutHelp += 1
-					case c: SumCell => {
+						tempSum += c.value
+						arraySum(column) = c.value
+
+						if (c.value == 0) isCellValid = false
+
+					case c: SumCell =>
+
 						if (tempSum != 0) {
 
-							var cout = 0
-							arraySum.foreach(arg => arraySum.foreach(arg_ => if ((arg == arg_) && (arg != 0)) cout += 1))
+							println("Cell valid ==> " + isCellValid + " : row " + row + ", column from " + tempColumn + " to " + (column - 1))
 
-							if (cout > coutHelp)
-								result += "Multiple number: row " + row + ", column from " + tempColumn + " to " + (column - 1)
+							var multipleNum = false
+							var tempArraySum = arraySum.sortWith(_ < _)
+							for (i <- 0 to arraySum.length - 1)
+								for (j <- i + 1 to arraySum.length - 1)
+									if ((tempArraySum(i) == tempArraySum(j)) && (tempArraySum(i) != 0))
+										multipleNum = true
+
+							if (multipleNum)
+								resultMultple += "Multiple number: row " + row + ", column from " + tempColumn + " to " + (column - 1)
 							else {
 								if ((sum == tempSum) && (sum != 0))
-									result += "True row " + row + ", column from " + tempColumn + " to " + (column - 1)
+									resultTrue += "True row " + row + ", column from " + tempColumn + " to " + (column - 1)
 								if ((sum != tempSum) && (tempSum != 0))
-									result += "False row " + row + ", column from " + tempColumn + " to " + (column - 1)
+									resultFalse += "False row " + row + ", column from " + tempColumn + " to " + (column - 1)
 							}
 							tempSum = 0
-							coutHelp = 0
 							arraySum = new Array[Int](column__)
 						}
+						isCellValid = true
 						tempColumn = column + 1
 						sum = c.columnSum
-					}
+
 					case _ =>
 						if (tempSum != 0) {
 
-							var cout = 0
-							arraySum.foreach(arg => arraySum.foreach(arg_ => if ((arg == arg_) && (arg != 0)) cout += 1))
+							println("Cell valid ==> " + isCellValid + " : row " + row + ", column from " + tempColumn + " to " + (column - 1))
 
-							if (cout > coutHelp)
-								result += "Multiple number: row " + row + ", column from " + tempColumn + " to " + (column - 1)
+							var multipleNum = false
+							var tempArraySum = arraySum.sortWith(_ < _)
+							for (i <- 0 to arraySum.length - 1)
+								for (j <- i + 1 to arraySum.length - 1)
+									if ((tempArraySum(i) == tempArraySum(j)) && (tempArraySum(i) != 0))
+										multipleNum = true
+
+							if (multipleNum)
+								resultMultple += "Multiple number: row " + row + ", column from " + tempColumn + " to " + (column - 1)
 							else {
 								if ((sum == tempSum) && (sum != 0))
-									result += "True row " + row + ", column from " + tempColumn + " to " + (column - 1)
+									resultTrue += "True row " + row + ", column from " + tempColumn + " to " + (column - 1)
 								if ((sum != tempSum) && (tempSum != 0))
-									result += "False row " + row + ", column from " + tempColumn + " to " + (column - 1)
+									resultFalse += "False row " + row + ", column from " + tempColumn + " to " + (column - 1)
 							}
 							tempSum = 0
-							coutHelp = 0
 							arraySum = new Array[Int](column__)
 						}
+						isCellValid = true
 				}
 			}
 
-			var cout = 0
-			arraySum.foreach(arg => arraySum.foreach(arg_ => if ((arg == arg_) && (arg != 0)) cout += 1))
+			if (tempSum != 0) {
 
-			if (cout > coutHelp)
-				result += "Multiple number: row " + row + ", column from " + tempColumn + " to " + (column__ - 1)
-			else {
-				if ((sum == tempSum) && (sum != 0))
-					result += "True row " + row + ", column from " + tempColumn + " to " + (column__ - 1)
-				if ((sum != tempSum) && (tempSum != 0))
-					result += "False row " + row + ", column from " + tempColumn + " to " + (column__ - 1)
+				println("Cell valid ==> " + isCellValid + " : row " + row + ", column from " + tempColumn + " to " + (column__ - 1))
+
+				var multipleNum = false
+				var tempArraySum = arraySum.sortWith(_ < _)
+				for (i <- 0 to arraySum.length - 1)
+					for (j <- i + 1 to arraySum.length - 1)
+						if ((tempArraySum(i) == tempArraySum(j)) && (tempArraySum(i) != 0))
+							multipleNum = true
+
+				if (multipleNum)
+					resultMultple += "Multiple number: row " + row + ", column from " + tempColumn + " to " + (column__ - 1)
+				else {
+					if ((sum == tempSum) && (sum != 0))
+						resultTrue += "True row " + row + ", column from " + tempColumn + " to " + (column__ - 1)
+					if ((sum != tempSum) && (tempSum != 0))
+						resultFalse += "False row " + row + ", column from " + tempColumn + " to " + (column__ - 1)
+				}
 			}
+			isCellValid = true
 			tempSum = 0
-			coutHelp = 0
 			arraySum = new Array[Int](column__)
 		}
 
 		tempSum = 0
-		coutHelp = 0
 		arraySum = new Array[Int](row__)
+
+		isCellValid = true
 
 		// check all column
 		for (column <- 0 until column__) {
 			for (row <- 0 until row__) {
 				cells(row)(column) match {
 					case c: Cell =>
-							tempSum += c.value
-							arraySum(row) = c.value
-							coutHelp += 1
-					case c: SumCell => {
+						tempSum += c.value
+						arraySum(row) = c.value
+
+						if (c.value == 0) isCellValid = false
+
+					case c: SumCell =>
+
 						if (tempSum != 0) {
 
-							var cout = 0
-							arraySum.foreach(arg => arraySum.foreach(arg_ => if ((arg == arg_) && (arg != 0)) cout += 1))
+							println("Cell valid ==> " + isCellValid + " : column " + column + ", row from " + tempRow + " to " + (row - 1))
 
-							if (cout > coutHelp)
-								result += "Multiple number: column " + column + ", row from " + tempRow + " to " + (row - 1)
+							var multipleNum = false
+							var tempArraySum = arraySum.sortWith(_ < _)
+							for (i <- 0 to arraySum.length - 1)
+								for (j <- i + 1 to arraySum.length - 1)
+									if ((tempArraySum(i) == tempArraySum(j)) && (tempArraySum(i) != 0))
+										multipleNum = true
+
+							if (multipleNum)
+								resultMultple += "Multiple number: column " + column + ", row from " + tempRow + " to " + (row - 1)
 							else {
 								if ((sum == tempSum) && (sum != 0))
-									result += "True column " + column + ", row from " + tempRow + " to " + (row - 1)
+									resultTrue += "True column " + column + ", row from " + tempRow + " to " + (row - 1)
 								if ((sum != tempSum) && (tempSum != 0))
-									result += "False column " + column + ", row from " + tempRow + " to " + (row - 1)
+									resultFalse += "False column " + column + ", row from " + tempRow + " to " + (row - 1)
 							}
+							isCellValid = true
 							tempSum = 0
-							coutHelp = 0
 							arraySum = new Array[Int](row__)
 						}
 						tempRow = row + 1
 						sum = c.rowSum
-					}
-					case _ => {
+
+					case _ =>
 						if (tempSum != 0) {
 
-							var cout = 0
-							arraySum.foreach(arg => arraySum.foreach(arg_ => if ((arg == arg_) && (arg != 0)) cout += 1))
+							println("Cell valid ==> " + isCellValid + " : column " + column + ", row from " + tempRow + " to " + (row - 1))
 
-							if (cout > coutHelp)
-								result += "Multiple number: column " + column + ", row from " + tempRow + " to " + (row - 1)
+							var multipleNum = false
+							var tempArraySum = arraySum.sortWith(_ < _)
+							for (i <- 0 to arraySum.length - 1)
+								for (j <- i + 1 to arraySum.length - 1)
+									if ((tempArraySum(i) == tempArraySum(j)) && (tempArraySum(i) != 0))
+										multipleNum = true
+
+							if (multipleNum)
+								resultMultple += "Multiple number: column " + column + ", row from " + tempRow + " to " + (row - 1)
 							else {
 								if ((sum == tempSum) && (sum != 0))
-									result += "True column " + column + ", row from " + tempRow + " to " + (row - 1)
+									resultTrue += "True column " + column + ", row from " + tempRow + " to " + (row - 1)
 								if ((sum != tempSum) && (tempSum != 0))
-									result += "False column " + column + ", row from " + tempRow + " to " + (row - 1)
+									resultFalse += "False column " + column + ", row from " + tempRow + " to " + (row - 1)
 							}
 							tempSum = 0
-							coutHelp = 0
 							arraySum = new Array[Int](row__)
 						}
-					}
+						isCellValid = true
 				}
 			}
 
-			var cout = 0
-			arraySum.foreach(arg => arraySum.foreach(arg_ => if ((arg == arg_) && (arg != 0)) cout += 1))
+			if (tempSum != 0) {
 
-			if (cout > coutHelp)
-				result += "Multiple number: column " + column + ", row from " + tempRow + " to " + (row__ - 1)
-			else {
-				if ((sum == tempSum) && (sum != 0))
-					result += "True column " + column + ", row from " + tempRow + " to " + (row__ - 1)
-				if ((sum != tempSum) && (tempSum != 0))
-					result += "False column " + column + ", row from " + tempRow + " to " + (row__ - 1)
+				println("Cell valid ==> " + isCellValid + " : column " + column + ", row from " + tempRow + " to " + (row__ - 1))
+
+				var multipleNum = false
+				var tempArraySum = arraySum.sortWith(_ < _)
+				for (i <- 0 to arraySum.length - 1)
+					for (j <- i + 1 to arraySum.length - 1)
+						if ((tempArraySum(i) == tempArraySum(j)) && (tempArraySum(i) != 0))
+							multipleNum = true
+
+				if (multipleNum)
+					resultMultple += "Multiple number: column " + column + ", row from " + tempRow + " to " + (row__ - 1)
+				else {
+					if ((sum == tempSum) && (sum != 0))
+						resultTrue += "True column " + column + ", row from " + tempRow + " to " + (row__ - 1)
+					if ((sum != tempSum) && (tempSum != 0))
+						resultFalse += "False column " + column + ", row from " + tempRow + " to " + (row__ - 1)
+				}
 			}
+			isCellValid = true
 			tempSum = 0
-			coutHelp = 0
 			arraySum = new Array[Int](row__)
 		}
+
+		resultFalse.foreach(c => result += c)
+		resultTrue.foreach(c => result += c)
+		resultMultple.foreach(c => result += c)
 		result
 	}
 
