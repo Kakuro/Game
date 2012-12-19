@@ -12,18 +12,51 @@ class PlayField() {
 	var cells = Array.ofDim[AbstractCell](0, 0)
 	var row__ = 0
 	var column__ = 0
-
-	load("data/default.ini")
+	var fileName = "data/default.ini" 
+	load(fileName)
 
 	// resetting the complete field
 	def reset = {
-		for (row <- 0 until row__; column <- 0 until column__) {
-			cells(row)(column) match {
-				case c: Cell => c <== 0
-				case c: SumCell => // do nothing
-				case _ => // do nothing
-			}
+		load(fileName)
+	}
+
+	// checking a array cell of numbers
+	def multipleNumber(array: Array[Int]): Boolean = {
+		var multipleNum = false
+		var tempArraySum = array.sortWith(_ < _)
+		for (i <- 0 to array.length - 1)
+			for (j <- i + 1 to array.length - 1)
+				if ((tempArraySum(i) == tempArraySum(j)) && (tempArraySum(i) != 0))
+					multipleNum = true
+		multipleNum
+	}
+
+	def stringResult_Row(arraySum: Array[Int], row: Int, tempSum: Int, tempColumn: Int, column: Int, sum: Int): String = {
+		var result: String = ""
+
+		if (multipleNumber(arraySum)){
+			result = "Multiple number: row " + row + ", column from " + tempColumn + " to " + (column - 1)
+		}else{
+			if ((sum == tempSum) && (sum != 0))
+				result = "True row " + row + ", column from " + tempColumn + " to " + (column - 1)
+			if ((sum != tempSum) && (tempSum != 0))
+				result = "False row " + row + ", column from " + tempColumn + " to " + (column - 1)
 		}
+		result
+	}
+
+	def stringResult_Column(arraySum: Array[Int], row: Int, tempSum: Int, tempRow: Int, column: Int, sum: Int): String = {
+		var result: String = ""
+		
+		if (multipleNumber(arraySum)){
+			result = "Multiple number: column " + column + ", row from " + tempRow + " to " + (row - 1)
+		}else{
+			if ((sum == tempSum) && (sum != 0))
+				result = "True column " + column + ", row from " + tempRow + " to " + (row - 1)
+			if ((sum != tempSum) && (tempSum != 0))
+				result = "False column " + column + ", row from " + tempRow + " to " + (row - 1)
+		}
+		result
 	}
 
 	// checking the complete field with corresponding sums
@@ -31,9 +64,6 @@ class PlayField() {
 		var sum = 0
 		var tempSum = 0
 		var arraySum = new Array[Int](column__)
-		var resultTrue = new ListBuffer[String]
-		var resultFalse = new ListBuffer[String]
-		var resultMultple = new ListBuffer[String]
 		var result = new ListBuffer[String]
 		var tempColumn = 0
 		var tempRow = 0
@@ -46,93 +76,37 @@ class PlayField() {
 					case c: Cell =>
 						tempSum += c.value
 						arraySum(column) = c.value
-
 						if (c.value == 0) isCellValid = false
 
 					case c: SumCell =>
-
-						if (tempSum != 0) {
-
-							println("Cell valid ==> " + isCellValid + " : row " + row + ", column from " + tempColumn + " to " + (column - 1))
-
-							var multipleNum = false
-							var tempArraySum = arraySum.sortWith(_ < _)
-							for (i <- 0 to arraySum.length - 1)
-								for (j <- i + 1 to arraySum.length - 1)
-									if ((tempArraySum(i) == tempArraySum(j)) && (tempArraySum(i) != 0))
-										multipleNum = true
-
-							if (multipleNum)
-								resultMultple += "Multiple number: row " + row + ", column from " + tempColumn + " to " + (column - 1)
-							else {
-								if ((sum == tempSum) && (sum != 0))
-									resultTrue += "True row " + row + ", column from " + tempColumn + " to " + (column - 1)
-								if ((sum != tempSum) && (tempSum != 0))
-									resultFalse += "False row " + row + ", column from " + tempColumn + " to " + (column - 1)
-							}
-							tempSum = 0
-							arraySum = new Array[Int](column__)
-						}
+						if (tempSum != 0 && isCellValid)							
+							result += stringResult_Row(arraySum, row, tempSum, tempColumn, column, sum)
+						tempSum = 0
+						arraySum = new Array[Int](column__)
 						isCellValid = true
 						tempColumn = column + 1
 						sum = c.columnSum
 
 					case _ =>
-						if (tempSum != 0) {
-
-							println("Cell valid ==> " + isCellValid + " : row " + row + ", column from " + tempColumn + " to " + (column - 1))
-
-							var multipleNum = false
-							var tempArraySum = arraySum.sortWith(_ < _)
-							for (i <- 0 to arraySum.length - 1)
-								for (j <- i + 1 to arraySum.length - 1)
-									if ((tempArraySum(i) == tempArraySum(j)) && (tempArraySum(i) != 0))
-										multipleNum = true
-
-							if (multipleNum)
-								resultMultple += "Multiple number: row " + row + ", column from " + tempColumn + " to " + (column - 1)
-							else {
-								if ((sum == tempSum) && (sum != 0))
-									resultTrue += "True row " + row + ", column from " + tempColumn + " to " + (column - 1)
-								if ((sum != tempSum) && (tempSum != 0))
-									resultFalse += "False row " + row + ", column from " + tempColumn + " to " + (column - 1)
-							}
-							tempSum = 0
-							arraySum = new Array[Int](column__)
-						}
+						if (tempSum != 0 && isCellValid)
+							result += stringResult_Row(arraySum, row, tempSum, tempColumn, column, sum)
+						tempSum = 0
+						arraySum = new Array[Int](column__)
 						isCellValid = true
 				}
 			}
 
-			if (tempSum != 0) {
-
-				println("Cell valid ==> " + isCellValid + " : row " + row + ", column from " + tempColumn + " to " + (column__ - 1))
-
-				var multipleNum = false
-				var tempArraySum = arraySum.sortWith(_ < _)
-				for (i <- 0 to arraySum.length - 1)
-					for (j <- i + 1 to arraySum.length - 1)
-						if ((tempArraySum(i) == tempArraySum(j)) && (tempArraySum(i) != 0))
-							multipleNum = true
-
-				if (multipleNum)
-					resultMultple += "Multiple number: row " + row + ", column from " + tempColumn + " to " + (column__ - 1)
-				else {
-					if ((sum == tempSum) && (sum != 0))
-						resultTrue += "True row " + row + ", column from " + tempColumn + " to " + (column__ - 1)
-					if ((sum != tempSum) && (tempSum != 0))
-						resultFalse += "False row " + row + ", column from " + tempColumn + " to " + (column__ - 1)
-				}
-			}
+			if (tempSum != 0 && isCellValid) 
+				result += stringResult_Row(arraySum, row, tempSum, tempColumn, column__, sum)
 			isCellValid = true
 			tempSum = 0
 			arraySum = new Array[Int](column__)
 		}
 
-		tempSum = 0
-		arraySum = new Array[Int](row__)
-
-		isCellValid = true
+//		tempSum = 0
+//		arraySum = new Array[Int](row__)
+//
+//		isCellValid = true
 
 		// check all column
 		for (column <- 0 until column__) {
@@ -141,96 +115,38 @@ class PlayField() {
 					case c: Cell =>
 						tempSum += c.value
 						arraySum(row) = c.value
-
 						if (c.value == 0) isCellValid = false
 
 					case c: SumCell =>
-
-						if (tempSum != 0) {
-
-							println("Cell valid ==> " + isCellValid + " : column " + column + ", row from " + tempRow + " to " + (row - 1))
-
-							var multipleNum = false
-							var tempArraySum = arraySum.sortWith(_ < _)
-							for (i <- 0 to arraySum.length - 1)
-								for (j <- i + 1 to arraySum.length - 1)
-									if ((tempArraySum(i) == tempArraySum(j)) && (tempArraySum(i) != 0))
-										multipleNum = true
-
-							if (multipleNum)
-								resultMultple += "Multiple number: column " + column + ", row from " + tempRow + " to " + (row - 1)
-							else {
-								if ((sum == tempSum) && (sum != 0))
-									resultTrue += "True column " + column + ", row from " + tempRow + " to " + (row - 1)
-								if ((sum != tempSum) && (tempSum != 0))
-									resultFalse += "False column " + column + ", row from " + tempRow + " to " + (row - 1)
-							}
-							isCellValid = true
-							tempSum = 0
-							arraySum = new Array[Int](row__)
-						}
+						if (tempSum != 0 && isCellValid)
+							result += stringResult_Column(arraySum, row, tempSum, tempRow, column, sum)
+						isCellValid = true
+						tempSum = 0
+						arraySum = new Array[Int](row__)
 						tempRow = row + 1
 						sum = c.rowSum
 
 					case _ =>
-						if (tempSum != 0) {
-
-							println("Cell valid ==> " + isCellValid + " : column " + column + ", row from " + tempRow + " to " + (row - 1))
-
-							var multipleNum = false
-							var tempArraySum = arraySum.sortWith(_ < _)
-							for (i <- 0 to arraySum.length - 1)
-								for (j <- i + 1 to arraySum.length - 1)
-									if ((tempArraySum(i) == tempArraySum(j)) && (tempArraySum(i) != 0))
-										multipleNum = true
-
-							if (multipleNum)
-								resultMultple += "Multiple number: column " + column + ", row from " + tempRow + " to " + (row - 1)
-							else {
-								if ((sum == tempSum) && (sum != 0))
-									resultTrue += "True column " + column + ", row from " + tempRow + " to " + (row - 1)
-								if ((sum != tempSum) && (tempSum != 0))
-									resultFalse += "False column " + column + ", row from " + tempRow + " to " + (row - 1)
-							}
-							tempSum = 0
-							arraySum = new Array[Int](row__)
-						}
+						if (tempSum != 0 && isCellValid)
+							result += stringResult_Column(arraySum, row, tempSum, tempRow, column, sum)
+						tempSum = 0
+						arraySum = new Array[Int](row__)
 						isCellValid = true
 				}
 			}
 
-			if (tempSum != 0) {
-
-				println("Cell valid ==> " + isCellValid + " : column " + column + ", row from " + tempRow + " to " + (row__ - 1))
-
-				var multipleNum = false
-				var tempArraySum = arraySum.sortWith(_ < _)
-				for (i <- 0 to arraySum.length - 1)
-					for (j <- i + 1 to arraySum.length - 1)
-						if ((tempArraySum(i) == tempArraySum(j)) && (tempArraySum(i) != 0))
-							multipleNum = true
-
-				if (multipleNum)
-					resultMultple += "Multiple number: column " + column + ", row from " + tempRow + " to " + (row__ - 1)
-				else {
-					if ((sum == tempSum) && (sum != 0))
-						resultTrue += "True column " + column + ", row from " + tempRow + " to " + (row__ - 1)
-					if ((sum != tempSum) && (tempSum != 0))
-						resultFalse += "False column " + column + ", row from " + tempRow + " to " + (row__ - 1)
-				}
-			}
+			if (tempSum != 0 && isCellValid)
+				result += stringResult_Column(arraySum, row__, tempSum, tempRow, column, sum)
 			isCellValid = true
 			tempSum = 0
 			arraySum = new Array[Int](row__)
 		}
 
-		resultFalse.foreach(c => result += c)
-		resultTrue.foreach(c => result += c)
-		resultMultple.foreach(c => result += c)
-		result
+		result.sortWith(_ < _)
 	}
 
 	def load(name: String) = {
+		fileName = name
 		val rowCount = "#/(.*)".r
 		val columnCount = "(.*)/#".r
 		val column_row_Count = "(.*)/(.*)".r
@@ -241,7 +157,7 @@ class PlayField() {
 		var setSize = false;
 
 		try
-			for (line <- Source.fromFile(name).getLines()) {
+			for (line <- Source.fromFile(fileName).getLines()) {
 				line.split("	").toList.filter(c => c != ' ').map(c => c match {
 					case "#/#" =>
 						column += 1
