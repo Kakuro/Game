@@ -115,6 +115,10 @@ class Gui(controller: KakuroController) extends Frame {
 			}) { mnemonic = Key.L }
 			contents += new MenuItem(Action("Quit") { System.exit(0) }) { mnemonic = Key.Q }
 		}
+		contents += new Menu("Help"){
+			mnemonic = Key.H
+			contents += new MenuItem(Action("About Kakuro") { }) { mnemonic = Key.A }
+		}
 	}
 
 	def helpCheck(rowOr: Boolean, rowOrColumn: Int, from: Int, to: Int, color: java.awt.Color) {
@@ -181,7 +185,12 @@ class Gui(controller: KakuroController) extends Frame {
 		background = java.awt.Color.BLACK
 
 		// timer
-		val label = new Label { Alignment.Right; foreground = java.awt.Color.WHITE }
+		val label = new Label {
+			font = new Font("Serif", Font.BOLD, 20)
+			Alignment.Right
+			foreground = java.awt.Color.WHITE
+		}
+		
 		val timerlistener = new java.awt.event.ActionListener() {
 			def actionPerformed(evt: java.awt.event.ActionEvent) {
 				timeStamp += 1
@@ -201,17 +210,34 @@ class Gui(controller: KakuroController) extends Frame {
 		border = Swing.EmptyBorder(10, 10, 10, 10)
 	}
 
+	lazy val flowPanel = new FlowPanel{
+		background = java.awt.Color.BLACK
+		border = Swing.EmptyBorder(10, 10, 10, 10)
+		contents += new Button(Action("Level 1") { controller.load("data/level1.ini") })
+		contents += Swing.HStrut(20)
+		contents += new Button(Action("Level 2") { controller.load("data/level2.ini") })
+		contents += Swing.HStrut(20)
+		contents += new Button(Action("Level 3") { controller.load("data/level3.ini") })
+		contents += Swing.HStrut(20)
+		contents += new Button(Action("Level 4") { controller.load("data/level4.ini") })
+		contents += Swing.HStrut(20)
+		contents += new Button(Action("Level solved") { controller.load("data/solved.ini") })
+	}
+	
 	contents = new BorderPanel {
 		add(boxPanel, BorderPanel.Position.North)
 		add(gridPanel, BorderPanel.Position.Center)
+		add(flowPanel, BorderPanel.Position.South)
 	}
 
 	visible = true
 
 	def drawNew {
+		cells = Array.ofDim[TextField](controller.model.row__, controller.model.column__)
 		contents = new BorderPanel {
-			add(boxPanel, BorderPanel.Position.North)
-			add(gridPanel, BorderPanel.Position.Center)
+		add(boxPanel, BorderPanel.Position.North)
+		add(gridPanel, BorderPanel.Position.Center)
+		add(flowPanel, BorderPanel.Position.South)
 		}
 	}
 }
