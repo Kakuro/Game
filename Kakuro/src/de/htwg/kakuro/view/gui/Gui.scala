@@ -21,6 +21,7 @@ import java.awt.Font
 import javax.swing.Timer
 import java.util.Timer
 import Swing._
+import de.htwg.kakuro.controller.CheckCellsResult
 
 class Gui(controller: KakuroController) extends Frame {
 	listenTo(controller)
@@ -35,24 +36,6 @@ class Gui(controller: KakuroController) extends Frame {
 	// titel und icon
 	title = "Kakuro"
 	iconImage = toolkit.getImage("data/icon.png")
-
-	// add ComboBox for look and feel 
-	val list = new ListBuffer[String]()
-	for (info <- javax.swing.UIManager.getInstalledLookAndFeels)
-		list += info.getClassName()
-
-	val comboBox = new ComboBox(list) {
-		listenTo(selection)
-		reactions += {
-			case e: SelectionChanged => {
-				val selected = selection.item
-				try { javax.swing.UIManager.setLookAndFeel(selected) }
-				catch { case _ => javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName()); }
-				drawNew
-			}
-		}
-
-	}
 
 	var cells = Array.ofDim[TextField](controller.model.row__, controller.model.column__)
 
@@ -72,6 +55,8 @@ class Gui(controller: KakuroController) extends Frame {
 
 			controller.model.cells(row)(column) match {
 				case c: Cell => {
+					cells(row)(column).foreground = java.awt.Color.BLACK
+					cells(row)(column).font = new Font("Serif", Font.BOLD, 30)
 					cells(row)(column).text = c.toString
 					cells(row)(column).name = "Cell " + row + "," + column
 				}
@@ -95,7 +80,7 @@ class Gui(controller: KakuroController) extends Frame {
 			//			case KeyPressed(name, Key.Enter, mod, value) => println("Ok, searching DB for input " + name.asInstanceOf[TextField].text)
 			case EditDone(textField) =>
 				val cell = "Cell ([1-9]*[0-9]*[0-9]),([1-9]*[0-9]*[0-9])".r
-				val cellValue = "([1-9]*[0-9]*[0-9])".r
+				val cellValue = "([1-9])".r
 
 				textField.name.split("	").toList.filter(c => c != ' ').map(c => c match {
 					case cell(row, column) => {
@@ -115,8 +100,6 @@ class Gui(controller: KakuroController) extends Frame {
 		contents += new Menu("File") {
 			mnemonic = Key.F
 			contents += new MenuItem(Action("New") { controller.load("data/easy.ini") }) { mnemonic = Key.N }
-			contents += new MenuItem(Action("Check") { controller.check }) { mnemonic = Key.C }
-			contents += new MenuItem(Action("Reset") { controller.reset }) { mnemonic = Key.R }
 			contents += new MenuItem(Action("Load") {
 				val fileDialog = new FileChooser() { fileFilter = new FileNameExtensionFilter("Kakuro", "ini") }
 				fileDialog.title = "Load new Game"
@@ -152,6 +135,21 @@ class Gui(controller: KakuroController) extends Frame {
 	reactions += {
 		case e: ChangeCell => drawNew
 		case e: NewPlayField => drawNew
+		case e: CheckCellsResult => {
+			timer.stop
+			if (e.result == true) {
+				val r = Dialog.showInput(contents.head, "Check Ok", initial = "Enter your name")
+				r match {
+					case Some(s) => 
+						controller.model.scoreList ::= "Name: " + s + ", with Time : " + timeStamp.toString + " sec."
+						timeStamp = 0
+					case None =>
+				}
+			}
+			else
+				Dialog.showMessage(contents.head, "Check Not Ok", title="Check")
+			timer.start
+		}
 		case e: CheckCell => {
 
 			val cellFalseRow = "False row ([1-9]*[0-9]*[0-9]), column from ([1-9]*[0-9]*[0-9]) to ([1-9]*[0-9]*[0-9])".r
@@ -176,8 +174,10 @@ class Gui(controller: KakuroController) extends Frame {
 	}
 
 	// BoxPanel on the top with two buttons and a label
-	val boxPanel = new BoxPanel(Orientation.Horizontal) {
-		var timeStamp = 0;
+	var timeStamp = 0;
+	var timer: javax.swing.Timer = null
+	lazy val boxPanel = new BoxPanel(Orientation.Horizontal) {
+
 		background = java.awt.Color.BLACK
 
 		// timer
@@ -188,22 +188,21 @@ class Gui(controller: KakuroController) extends Frame {
 				label.text = "Time : " + timeStamp.toString + " sec."
 			}
 		}
-		val timer = new javax.swing.Timer(1000, timerlistener)
+		timer = new javax.swing.Timer(1000, timerlistener)
 		timer.start()
 
 		contents += new Button(Action("Check") { controller.check })
 		contents += Swing.HStrut(20)
 		contents += new Button(Action("Reset") { controller.reset; timeStamp = 0 })
 		contents += Swing.HStrut(20)
+		contents += new Button(Action("Score") { new Score(controller.model.scoreList) })
+		contents += Swing.Glue
 		contents += label
-		//				contents += new Table(3, 3)
 		border = Swing.EmptyBorder(10, 10, 10, 10)
-//		border = LineBorder(java.awt.Color.RED, 10)
 	}
 
 	contents = new BorderPanel {
 		add(boxPanel, BorderPanel.Position.North)
-		add(comboBox, BorderPanel.Position.South)
 		add(gridPanel, BorderPanel.Position.Center)
 	}
 
@@ -212,7 +211,6 @@ class Gui(controller: KakuroController) extends Frame {
 	def drawNew {
 		contents = new BorderPanel {
 			add(boxPanel, BorderPanel.Position.North)
-			add(comboBox, BorderPanel.Position.South)
 			add(gridPanel, BorderPanel.Position.Center)
 		}
 	}

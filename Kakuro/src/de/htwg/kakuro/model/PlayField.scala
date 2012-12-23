@@ -10,9 +10,10 @@ import scala.collection.mutable.ListBuffer
 class PlayField() {
 
 	var cells = Array.ofDim[AbstractCell](0, 0)
+	var scoreList: List[String] = List()
 	var row__ = 0
 	var column__ = 0
-	var fileName = "data/default.ini" 
+	var fileName = "data/default.ini"
 	load(fileName)
 
 	// resetting the complete field
@@ -34,9 +35,9 @@ class PlayField() {
 	def stringResult_Row(arraySum: Array[Int], row: Int, tempSum: Int, tempColumn: Int, column: Int, sum: Int): String = {
 		var result: String = ""
 
-		if (multipleNumber(arraySum)){
+		if (multipleNumber(arraySum)) {
 			result = "Multiple number: row " + row + ", column from " + tempColumn + " to " + (column - 1)
-		}else{
+		} else {
 			if ((sum == tempSum) && (sum != 0))
 				result = "True row " + row + ", column from " + tempColumn + " to " + (column - 1)
 			if ((sum != tempSum) && (tempSum != 0))
@@ -47,10 +48,10 @@ class PlayField() {
 
 	def stringResult_Column(arraySum: Array[Int], row: Int, tempSum: Int, tempRow: Int, column: Int, sum: Int): String = {
 		var result: String = ""
-		
-		if (multipleNumber(arraySum)){
+
+		if (multipleNumber(arraySum)) {
 			result = "Multiple number: column " + column + ", row from " + tempRow + " to " + (row - 1)
-		}else{
+		} else {
 			if ((sum == tempSum) && (sum != 0))
 				result = "True column " + column + ", row from " + tempRow + " to " + (row - 1)
 			if ((sum != tempSum) && (tempSum != 0))
@@ -60,7 +61,7 @@ class PlayField() {
 	}
 
 	// checking the complete field with corresponding sums
-	def check: ListBuffer[String] = {
+	def check: (ListBuffer[String], Boolean) = {
 		var sum = 0
 		var tempSum = 0
 		var arraySum = new Array[Int](column__)
@@ -68,6 +69,7 @@ class PlayField() {
 		var tempColumn = 0
 		var tempRow = 0
 		var isCellValid = true
+		var cellsCount = 0
 
 		// check all rows
 		for (row <- 0 until row__) {
@@ -79,13 +81,18 @@ class PlayField() {
 						if (c.value == 0) isCellValid = false
 
 					case c: SumCell =>
-						if (tempSum != 0 && isCellValid)							
+						if (tempSum != 0 && isCellValid)
 							result += stringResult_Row(arraySum, row, tempSum, tempColumn, column, sum)
 						tempSum = 0
 						arraySum = new Array[Int](column__)
 						isCellValid = true
 						tempColumn = column + 1
 						sum = c.columnSum
+
+						if (c.rowSum != 0)
+							cellsCount += 1
+						if (c.columnSum != 0)
+							cellsCount += 1
 
 					case _ =>
 						if (tempSum != 0 && isCellValid)
@@ -96,17 +103,17 @@ class PlayField() {
 				}
 			}
 
-			if (tempSum != 0 && isCellValid) 
+			if (tempSum != 0 && isCellValid)
 				result += stringResult_Row(arraySum, row, tempSum, tempColumn, column__, sum)
 			isCellValid = true
 			tempSum = 0
 			arraySum = new Array[Int](column__)
 		}
 
-//		tempSum = 0
-//		arraySum = new Array[Int](row__)
-//
-//		isCellValid = true
+		//		tempSum = 0
+		//		arraySum = new Array[Int](row__)
+		//
+		//		isCellValid = true
 
 		// check all column
 		for (column <- 0 until column__) {
@@ -142,7 +149,22 @@ class PlayField() {
 			arraySum = new Array[Int](row__)
 		}
 
-		result.sortWith(_ < _)
+		var allCellsOk = false
+		val allCells = result.sortWith(_ < _)
+		var cellsCountHelp = 0
+		val cellTrueRow = "True row ([1-9]*[0-9]*[0-9]), column from ([1-9]*[0-9]*[0-9]) to ([1-9]*[0-9]*[0-9])".r
+		val cellTrueColumn = "True column ([1-9]*[0-9]*[0-9]), row from ([1-9]*[0-9]*[0-9]) to ([1-9]*[0-9]*[0-9])".r
+
+		allCells.foreach(f => f.split("	").toList.filter(c => c != ' ').map(c => c match {
+			case cellTrueRow(row, columnFrom, columnTo) => cellsCountHelp += 1 
+			case cellTrueColumn(column, rowFrom, rowTo) => cellsCountHelp += 1
+			case _ =>
+		}))
+
+		if (cellsCount == cellsCountHelp)
+			allCellsOk = true
+
+		(result.sortWith(_ < _), allCellsOk)
 	}
 
 	def load(name: String) = {
