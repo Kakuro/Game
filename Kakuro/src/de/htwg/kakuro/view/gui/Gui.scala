@@ -26,6 +26,15 @@ import de.htwg.kakuro.controller.CheckCellsResult
 class Gui(controller: KakuroController) extends Frame {
 	listenTo(controller)
 
+	class Style {
+		var background: java.awt.Color = java.awt.Color.BLACK
+		var editCell: java.awt.Color = java.awt.Color.WHITE
+		var editCellForeground: java.awt.Color = java.awt.Color.BLACK
+		var nonCell: java.awt.Color = java.awt.Color.YELLOW
+		var noneCellForeground: java.awt.Color = java.awt.Color.GRAY
+	}
+	private var style = new Style
+
 	// size and position
 	val framewidth = 640
 	val frameheight = 480
@@ -42,27 +51,28 @@ class Gui(controller: KakuroController) extends Frame {
 	// creating the grid panel for the play field
 	def gridPanel = new GridPanel(controller.model.row__, controller.model.column__) {
 		contents.clear
-		border = LineBorder(java.awt.Color.BLACK, 30)
-		background = java.awt.Color.BLACK
+		border = LineBorder(style.background, 30)
+		background = style.background
 
 		for (row <- 0 until controller.model.row__; column <- 0 until controller.model.column__) {
 
 			cells(row)(column) = new TextField
 			cells(row)(column).horizontalAlignment = Alignment.Center
 			cells(row)(column).border = LineBorder(java.awt.Color.GRAY, 5)
-			cells(row)(column).foreground = java.awt.Color.GRAY
+			cells(row)(column).foreground = style.noneCellForeground
 			cells(row)(column).font = new Font("Serif", Font.ITALIC | Font.BOLD, 30)
 
 			controller.model.cells(row)(column) match {
 				case c: Cell => {
-					cells(row)(column).foreground = java.awt.Color.BLACK
+					cells(row)(column).foreground = style.editCellForeground
+					cells(row)(column).background = style.editCell
 					cells(row)(column).font = new Font("Serif", Font.BOLD, 30)
 					cells(row)(column).text = c.toString
 					cells(row)(column).name = "Cell " + row + "," + column
 				}
 				case c: SumCell => {
 					cells(row)(column).text = c.toString
-					cells(row)(column).background = java.awt.Color.YELLOW
+					cells(row)(column).background = style.nonCell
 					cells(row)(column).editable = false
 					cells(row)(column).name = "SumCell " + row + "," + column
 				}
@@ -101,7 +111,7 @@ class Gui(controller: KakuroController) extends Frame {
 			mnemonic = Key.F
 			contents += new MenuItem(Action("New") { controller.load("data/easy.ini") }) { mnemonic = Key.N }
 			contents += new MenuItem(Action("Load") {
-				val fileDialog = new FileChooser() { fileFilter = new FileNameExtensionFilter("Kakuro", "ini") }
+				val fileDialog = new FileChooser(new File(System.getProperty("user.dir"))) { fileFilter = new FileNameExtensionFilter("Kakuro", "ini") }
 				fileDialog.title = "Load new Game"
 
 				fileDialog.showOpenDialog(this) match {
@@ -115,9 +125,22 @@ class Gui(controller: KakuroController) extends Frame {
 			}) { mnemonic = Key.L }
 			contents += new MenuItem(Action("Quit") { System.exit(0) }) { mnemonic = Key.Q }
 		}
-		contents += new Menu("Help"){
+		contents += new Menu("Style") {
+			mnemonic = Key.S
+			contents += new MenuItem(Action("Style 1") {
+				style.background = java.awt.Color.YELLOW
+				style.editCell = java.awt.Color.CYAN
+				style.editCellForeground = java.awt.Color.BLACK
+				style.nonCell = java.awt.Color.BLUE
+				style.noneCellForeground = java.awt.Color.GRAY
+
+				drawNew
+
+			}) {}
+		}
+		contents += new Menu("Help") {
 			mnemonic = Key.H
-			contents += new MenuItem(Action("About Kakuro") { }) { mnemonic = Key.A }
+			contents += new MenuItem(Action("About Kakuro") {}) { mnemonic = Key.A }
 		}
 	}
 
@@ -144,14 +167,13 @@ class Gui(controller: KakuroController) extends Frame {
 			if (e.result == true) {
 				val r = Dialog.showInput(contents.head, "Check Ok", initial = "Enter your name")
 				r match {
-					case Some(s) => 
+					case Some(s) =>
 						controller.model.scoreList ::= "Name: " + s + ", with Time : " + timeStamp.toString + " sec."
 						timeStamp = 0
 					case None =>
 				}
-			}
-			else
-				Dialog.showMessage(contents.head, "Check Not Ok", title="Check")
+			} else
+				Dialog.showMessage(contents.head, "Check Not Ok", title = "Check")
 			timer.start
 		}
 		case e: CheckCell => {
@@ -180,9 +202,9 @@ class Gui(controller: KakuroController) extends Frame {
 	// BoxPanel on the top with two buttons and a label
 	var timeStamp = 0;
 	var timer: javax.swing.Timer = null
-	lazy val boxPanel = new BoxPanel(Orientation.Horizontal) {
+	def boxPanel = new BoxPanel(Orientation.Horizontal) {
 
-		background = java.awt.Color.BLACK
+		background = style.background
 
 		// timer
 		val label = new Label {
@@ -190,7 +212,7 @@ class Gui(controller: KakuroController) extends Frame {
 			Alignment.Right
 			foreground = java.awt.Color.WHITE
 		}
-		
+
 		val timerlistener = new java.awt.event.ActionListener() {
 			def actionPerformed(evt: java.awt.event.ActionEvent) {
 				timeStamp += 1
@@ -210,8 +232,8 @@ class Gui(controller: KakuroController) extends Frame {
 		border = Swing.EmptyBorder(10, 10, 10, 10)
 	}
 
-	lazy val flowPanel = new FlowPanel{
-		background = java.awt.Color.BLACK
+	def flowPanel = new FlowPanel {
+		background = style.background
 		border = Swing.EmptyBorder(10, 10, 10, 10)
 		contents += new Button(Action("Level 1") { controller.load("data/level1.ini") })
 		contents += Swing.HStrut(20)
@@ -223,7 +245,7 @@ class Gui(controller: KakuroController) extends Frame {
 		contents += Swing.HStrut(20)
 		contents += new Button(Action("Level solved") { controller.load("data/solved.ini") })
 	}
-	
+
 	contents = new BorderPanel {
 		add(boxPanel, BorderPanel.Position.North)
 		add(gridPanel, BorderPanel.Position.Center)
@@ -235,9 +257,9 @@ class Gui(controller: KakuroController) extends Frame {
 	def drawNew {
 		cells = Array.ofDim[TextField](controller.model.row__, controller.model.column__)
 		contents = new BorderPanel {
-		add(boxPanel, BorderPanel.Position.North)
-		add(gridPanel, BorderPanel.Position.Center)
-		add(flowPanel, BorderPanel.Position.South)
+			add(boxPanel, BorderPanel.Position.North)
+			add(gridPanel, BorderPanel.Position.Center)
+			add(flowPanel, BorderPanel.Position.South)
 		}
 	}
 }
