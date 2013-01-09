@@ -128,6 +128,16 @@ class Gui(controller: KakuroController) extends Frame {
 		contents += new Menu("Style") {
 			mnemonic = Key.S
 			contents += new MenuItem(Action("Style 1") {
+				style.background = java.awt.Color.BLACK
+				style.editCell = java.awt.Color.WHITE
+				style.editCellForeground = java.awt.Color.BLACK
+				style.nonCell = java.awt.Color.YELLOW
+				style.noneCellForeground = java.awt.Color.GRAY
+
+				drawNew
+			}) {}
+			
+			contents += new MenuItem(Action("Style 2") {
 				style.background = java.awt.Color.YELLOW
 				style.editCell = java.awt.Color.CYAN
 				style.editCellForeground = java.awt.Color.BLACK
@@ -135,12 +145,19 @@ class Gui(controller: KakuroController) extends Frame {
 				style.noneCellForeground = java.awt.Color.GRAY
 
 				drawNew
-
 			}) {}
+
 		}
 		contents += new Menu("Help") {
 			mnemonic = Key.H
-			contents += new MenuItem(Action("About Kakuro") {}) { mnemonic = Key.A }
+			contents += new MenuItem(Action("About Kakuro") {Dialog.showMessage(this, 
+																	"- Der Aufbau ähnelt dem eines Kreuzworträtzel.\n" +
+																	"- Anstelle von Buchstaben werden Ziffern verwendet.\n" +
+																	"- Statt Wortdefinitionen werden Summen definiert.\n\n" +
+																	"- Jede Summe darf nur aus den Ziffern von 1 bis 9 bestehen.\n" +
+																	"- In jeder Summe (Zelle) darf jede Ziffer nur einmal vorkommen.\n" +
+																	"- An jeder freien Stelle darf nur eine Ziffer eingetragen werden.\n", 
+																	"Regeln")}) { mnemonic = Key.A }
 		}
 	}
 
