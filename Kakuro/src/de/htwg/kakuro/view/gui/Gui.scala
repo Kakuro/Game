@@ -219,6 +219,9 @@ class Gui(controller: KakuroController) extends Frame {
 				label.text = "Time : " + timeStamp.toString + " sec."
 			}
 		}
+		
+		if (timer != null) timer.stop()
+		
 		timer = new javax.swing.Timer(1000, timerlistener)
 		timer.start()
 
@@ -235,15 +238,15 @@ class Gui(controller: KakuroController) extends Frame {
 	def flowPanel = new FlowPanel {
 		background = style.background
 		border = Swing.EmptyBorder(10, 10, 10, 10)
-		contents += new Button(Action("Level 1") { controller.load("data/level1.ini") })
+		contents += new Button(Action("Level 1") { controller.load("data/level1.ini"); timeStamp = 0 })
 		contents += Swing.HStrut(20)
-		contents += new Button(Action("Level 2") { controller.load("data/level2.ini") })
+		contents += new Button(Action("Level 2") { controller.load("data/level2.ini"); timeStamp = 0 })
 		contents += Swing.HStrut(20)
-		contents += new Button(Action("Level 3") { controller.load("data/level3.ini") })
+		contents += new Button(Action("Level 3") { controller.load("data/level3.ini"); timeStamp = 0 })
 		contents += Swing.HStrut(20)
-		contents += new Button(Action("Level 4") { controller.load("data/level4.ini") })
+		contents += new Button(Action("Level 4") { controller.load("data/level4.ini"); timeStamp = 0 })
 		contents += Swing.HStrut(20)
-		contents += new Button(Action("Level solved") { controller.load("data/solved.ini") })
+		contents += new Button(Action("Level solved") { controller.load("data/solved.ini"); timeStamp = 0 })
 	}
 
 	contents = new BorderPanel {
