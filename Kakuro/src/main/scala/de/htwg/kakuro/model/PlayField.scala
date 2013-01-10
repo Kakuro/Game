@@ -156,7 +156,7 @@ class PlayField() {
 		val cellTrueColumn = "True column ([1-9]*[0-9]*[0-9]), row from ([1-9]*[0-9]*[0-9]) to ([1-9]*[0-9]*[0-9])".r
 
 		allCells.foreach(f => f.split("	").toList.filter(c => c != ' ').map(c => c match {
-			case cellTrueRow(row, columnFrom, columnTo) => cellsCountHelp += 1 
+			case cellTrueRow(row, columnFrom, columnTo) => cellsCountHelp += 1
 			case cellTrueColumn(column, rowFrom, rowTo) => cellsCountHelp += 1
 			case _ =>
 		}))

@@ -37,8 +37,8 @@ class Tui(var controller: KakuroController) extends Reactor {
 		var run = true
 		commando match {
 			case "n" =>
-//				println("Please file name:")
-//				var filename = readLine
+				//				println("Please file name:")
+				//				var filename = readLine
 				controller.load("data/easy.ini")
 			case "c" => controller.check
 			case "r" => controller.reset
