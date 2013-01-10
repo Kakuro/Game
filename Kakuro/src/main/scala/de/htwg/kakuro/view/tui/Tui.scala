@@ -39,7 +39,7 @@ class Tui(var controller: KakuroController) extends Reactor {
 			case "n" =>
 				//				println("Please file name:")
 				//				var filename = readLine
-				controller.load("data/easy.ini")
+				controller.load("src/main/resources/data/easy.ini")
 			case "c" => controller.check
 			case "r" => controller.reset
 			case i: String if (i.split(" ").toList.length == 3) =>
@@ -55,7 +55,7 @@ class Tui(var controller: KakuroController) extends Reactor {
 			case "l" =>
 				println("Please enter the filename, e.g. data/default.ini:")
 				var name = readLine
-				controller.load("data/" + name)
+				controller.load("src/main/resources/data/" + name)
 			case "q" => run = false
 			case _ => printf("Command not found\n\n")
 		}

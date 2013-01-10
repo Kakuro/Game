@@ -44,7 +44,7 @@ class Gui(controller: KakuroController) extends Frame {
 
 	// titel und icon
 	title = "Kakuro"
-	iconImage = toolkit.getImage("data/icon.png")
+	iconImage = toolkit.getImage("src/main/resources/data/icon.png")
 
 	var cells = Array.ofDim[TextField](controller.model.row__, controller.model.column__)
 
@@ -109,7 +109,7 @@ class Gui(controller: KakuroController) extends Frame {
 	menuBar = new MenuBar {
 		contents += new Menu("File") {
 			mnemonic = Key.F
-			contents += new MenuItem(Action("New") { controller.load("data/easy.ini") }) { mnemonic = Key.N }
+			contents += new MenuItem(Action("New") { controller.load("src/main/resources/data/easy.ini") }) { mnemonic = Key.N }
 			contents += new MenuItem(Action("Load") {
 				val fileDialog = new FileChooser(new File(System.getProperty("user.dir"))) { fileFilter = new FileNameExtensionFilter("Kakuro", "ini") }
 				fileDialog.title = "Load new Game"
@@ -257,15 +257,15 @@ class Gui(controller: KakuroController) extends Frame {
 	def flowPanel = new FlowPanel {
 		background = style.background
 		border = Swing.EmptyBorder(10, 10, 10, 10)
-		contents += new Button(Action("Level 1") { controller.load("data/level1.ini"); timeStamp = 0 })
+		contents += new Button(Action("Level 1") { controller.load("src/main/resources/data/level1.ini"); timeStamp = 0 })
 		contents += Swing.HStrut(20)
-		contents += new Button(Action("Level 2") { controller.load("data/level2.ini"); timeStamp = 0 })
+		contents += new Button(Action("Level 2") { controller.load("src/main/resources/data/level2.ini"); timeStamp = 0 })
 		contents += Swing.HStrut(20)
-		contents += new Button(Action("Level 3") { controller.load("data/level3.ini"); timeStamp = 0 })
+		contents += new Button(Action("Level 3") { controller.load("src/main/resources/data/level3.ini"); timeStamp = 0 })
 		contents += Swing.HStrut(20)
-		contents += new Button(Action("Level 4") { controller.load("data/level4.ini"); timeStamp = 0 })
+		contents += new Button(Action("Level 4") { controller.load("src/main/resources/data/level4.ini"); timeStamp = 0 })
 		contents += Swing.HStrut(20)
-		contents += new Button(Action("Level solved") { controller.load("data/solved.ini"); timeStamp = 0 })
+		contents += new Button(Action("Level solved") { controller.load("src/main/resources/data/solved.ini"); timeStamp = 0 })
 	}
 
 	contents = new BorderPanel {

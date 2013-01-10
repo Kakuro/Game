@@ -13,7 +13,7 @@ class PlayField() {
 	var scoreList: List[String] = List()
 	var row__ = 0
 	var column__ = 0
-	var fileName = "data/default.ini"
+	var fileName = "src/main/resources/data/default.ini"
 	load(fileName)
 
 	// resetting the complete field
