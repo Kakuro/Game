@@ -152,7 +152,7 @@ class Gui(controller: KakuroController) extends Frame {
 			mnemonic = Key.H
 			contents += new MenuItem(Action("About Kakuro") {
 				Dialog.showMessage(this,
-					"- Der Aufbau ähnelt dem eines Kreuzworträtzel.\n" +
+					"- Der Aufbau aehnelt dem eines Kreuzwortraetzel.\n" +
 						"- Anstelle von Buchstaben werden Ziffern verwendet.\n" +
 						"- Statt Wortdefinitionen werden Summen definiert.\n\n" +
 						"- Jede Summe darf nur aus den Ziffern von 1 bis 9 bestehen.\n" +
