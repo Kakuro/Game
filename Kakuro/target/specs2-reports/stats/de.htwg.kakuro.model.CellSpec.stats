@@ -1,0 +1,17 @@
+<de.htwg.kakuro.model.CellSpec-results timestamp="1358101045192"><result location="de.htwg.kakuro.model.CellSpec (CellSpec.scala:22)" id="581327452"><stats expectations="1" examples="1" failures="1" time="34"></stats></result>
+</de.htwg.kakuro.model.CellSpec-results>
+<de.htwg.kakuro.model.CellSpec-stats timestamp="1358101045196"><stats expectations="5" successes="4" examples="5" failures="1" time="1107"></stats></de.htwg.kakuro.model.CellSpec-stats>
+<de.htwg.kakuro.model.CellSpec-stats timestamp="1358101422870"><stats expectations="4" examples="4" successes="4" time="185"><trend><stats expectations="-1" examples="-1" failures="-1" time="185"></stats></trend></stats></de.htwg.kakuro.model.CellSpec-stats>
+<de.htwg.kakuro.model.CellSpec-results timestamp="1358101505161"><result location="de.htwg.kakuro.model.CellSpec (CellSpec.scala:22)" id="-561278999"><stats expectations="1" examples="1" failures="1" time="27"></stats></result>
+</de.htwg.kakuro.model.CellSpec-results>
+<de.htwg.kakuro.model.CellSpec-stats timestamp="1358101505168"><stats expectations="5" successes="4" examples="5" failures="1" time="220"><trend><stats expectations="1" examples="1" failures="1" time="220"></stats></trend></stats></de.htwg.kakuro.model.CellSpec-stats>
+<de.htwg.kakuro.model.CellSpec-stats timestamp="1358101709858"><stats expectations="8" examples="8" successes="8" time="301"><trend><stats expectations="3" successes="4" examples="3" failures="-1" time="301"></stats></trend></stats></de.htwg.kakuro.model.CellSpec-stats>
+<de.htwg.kakuro.model.CellSpec-stats timestamp="1358101794562"><stats expectations="8" examples="8" successes="8" time="150"></stats></de.htwg.kakuro.model.CellSpec-stats>
+<de.htwg.kakuro.model.CellSpec-stats timestamp="1358102458682"><stats expectations="8" examples="8" successes="8" time="104"></stats></de.htwg.kakuro.model.CellSpec-stats>
+<de.htwg.kakuro.model.CellSpec-stats timestamp="1358102553914"><stats expectations="8" examples="8" successes="8" time="165"></stats></de.htwg.kakuro.model.CellSpec-stats>
+<de.htwg.kakuro.model.CellSpec-stats timestamp="1358106148957"><stats expectations="8" examples="8" successes="8" time="104"></stats></de.htwg.kakuro.model.CellSpec-stats>
+<de.htwg.kakuro.model.CellSpec-stats timestamp="1358106213272"><stats expectations="8" examples="8" successes="8" time="271"></stats></de.htwg.kakuro.model.CellSpec-stats>
+<de.htwg.kakuro.model.CellSpec-stats timestamp="1358106264569"><stats expectations="8" examples="8" successes="8" time="256"></stats></de.htwg.kakuro.model.CellSpec-stats>
+<de.htwg.kakuro.model.CellSpec-stats timestamp="1358106354254"><stats expectations="8" examples="8" successes="8" time="259"></stats></de.htwg.kakuro.model.CellSpec-stats>
+<de.htwg.kakuro.model.CellSpec-stats timestamp="1358106401049"><stats expectations="8" examples="8" successes="8" time="283"></stats></de.htwg.kakuro.model.CellSpec-stats>
+<de.htwg.kakuro.model.CellSpec-stats timestamp="1358106632948"><stats expectations="8" examples="8" successes="8" time="400"></stats></de.htwg.kakuro.model.CellSpec-stats>

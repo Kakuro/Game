@@ -1,0 +1,21 @@
+[0m[[0minfo[0m] [0mSumCellSpec[0m
+[0m[[0minfo[0m] [0m[0m
+[0m[[0minfo[0m] [0mA new Cell on place (0,0) with value (0/0) should[0m
+[0m[[0minfo[0m] [0m[32m+[0m have row sum 0[0m
+[0m[[0minfo[0m] [0m[32m+[0m have column sum 0[0m
+[0m[[0minfo[0m] [0m[32m+[0m equal row with 0[0m
+[0m[[0minfo[0m] [0m[32m+[0m equal column with 0[0m
+[0m[[0minfo[0m] [0m[32m+[0m generate a String of the form ''[0m
+[0m[[0minfo[0m] [0m [0m
+[0m[[0minfo[0m] [0mA new Cell on place (0,0) with value (2/2) should[0m
+[0m[[0minfo[0m] [0m[32m+[0m have row sum 2[0m
+[0m[[0minfo[0m] [0m[32m+[0m have column sum 2[0m
+[0m[[0minfo[0m] [0m[32m+[0m equal row with 2[0m
+[0m[[0minfo[0m] [0m[32m+[0m equal column with 2[0m
+[0m[[0minfo[0m] [0m[32m+[0m generate a String of the form ''[0m
+[0m[[0minfo[0m] [0m [0m
+[0m[[0minfo[0m] [0m [0m
+[0m[[0minfo[0m] [0mTotal for specification SumCellSpec[0m
+[0m[[0minfo[0m] [0m[34mFinished in 1 second, 129 ms[0m[0m
+[0m[[0minfo[0m] [0m[34m10 examples, 0 failure, 0 error[0m[0m
+[0m[[0minfo[0m] [0m[0m

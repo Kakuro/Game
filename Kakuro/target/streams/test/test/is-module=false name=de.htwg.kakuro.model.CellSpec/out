@@ -1,0 +1,19 @@
+[0m[[0minfo[0m] [0mCellSpec[0m
+[0m[[0minfo[0m] [0m[0m
+[0m[[0minfo[0m] [0mA new Cell on place (0,0) with value 0 should[0m
+[0m[[0minfo[0m] [0m[32m+[0m have value 0[0m
+[0m[[0minfo[0m] [0m[32m+[0m have status 0[0m
+[0m[[0minfo[0m] [0m[32m+[0m equal 0[0m
+[0m[[0minfo[0m] [0m[32m+[0m generate a String of the form ''[0m
+[0m[[0minfo[0m] [0m [0m
+[0m[[0minfo[0m] [0mA new Cell on place (0,0) with value 1 should[0m
+[0m[[0minfo[0m] [0m[32m+[0m have value 0[0m
+[0m[[0minfo[0m] [0m[32m+[0m have status 0[0m
+[0m[[0minfo[0m] [0m[32m+[0m equal 0[0m
+[0m[[0minfo[0m] [0m[32m+[0m generate a String of the form ''[0m
+[0m[[0minfo[0m] [0m [0m
+[0m[[0minfo[0m] [0m [0m
+[0m[[0minfo[0m] [0mTotal for specification CellSpec[0m
+[0m[[0minfo[0m] [0m[34mFinished in 1 second, 93 ms[0m[0m
+[0m[[0minfo[0m] [0m[34m8 examples, 0 failure, 0 error[0m[0m
+[0m[[0minfo[0m] [0m[0m
