@@ -128,25 +128,16 @@
 
 	<div style="color: silver">
 		@{controller.start.controller.reactions += {
-			case e: ChangeCell =>{ 
-				main(_)
-				println("1 --------------------------")
+			case e: ChangeCell => { 
 			}
 			case e: NewPlayField =>{
-				main(_)
-				println("2 --------------------------")
 			}
 			case e: CheckCellsResult =>{
-				main(_)
-				println("3 --------------------------")
 			}
 			case e: CheckCell =>{
-				main(_)
-				println("4 --------------------------")
 			}
 		}}
 	</div>
 	
 	@draw
-
 }

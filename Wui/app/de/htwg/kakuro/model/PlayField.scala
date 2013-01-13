@@ -27,7 +27,7 @@ class PlayField() {
 	}
 
 	// checking a array cell of numbers
-	def multipleNumber(array: Array[Int]): Boolean = {
+	private def multipleNumber(array: Array[Int]): Boolean = {
 		var multipleNum = false
 		var tempArraySum = array.sortWith(_ < _)
 		for (i <- 0 to array.length - 1)
@@ -37,7 +37,7 @@ class PlayField() {
 		multipleNum
 	}
 
-	def stringResult_Row(arraySum: Array[Int], row: Int, tempSum: Int, tempColumn: Int, column: Int, sum: Int): String = {
+	private def stringResult_Row(arraySum: Array[Int], row: Int, tempSum: Int, tempColumn: Int, column: Int, sum: Int): String = {
 		var result: String = ""
 
 		if (multipleNumber(arraySum)) {
@@ -51,7 +51,7 @@ class PlayField() {
 		result
 	}
 
-	def stringResult_Column(arraySum: Array[Int], row: Int, tempSum: Int, tempRow: Int, column: Int, sum: Int): String = {
+	private def stringResult_Column(arraySum: Array[Int], row: Int, tempSum: Int, tempRow: Int, column: Int, sum: Int): String = {
 		var result: String = ""
 
 		if (multipleNumber(arraySum)) {
@@ -192,7 +192,7 @@ class PlayField() {
 		(result.sortWith(_ < _), allCellsOk)
 	}
 
-	def helpCheck(rowOr: Boolean, rowOrColumn: Int, from: Int, to: Int, _status: Int) {
+	private def helpCheck(rowOr: Boolean, rowOrColumn: Int, from: Int, to: Int, _status: Int) {
 
 		if (rowOr) {
 			for (column <- from until to + 1) {
