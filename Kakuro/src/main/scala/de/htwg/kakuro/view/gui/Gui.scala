@@ -152,13 +152,13 @@ class Gui(controller: KakuroController) extends Frame {
 			mnemonic = Key.H
 			contents += new MenuItem(Action("About Kakuro") {
 				Dialog.showMessage(this,
-					"- Der Aufbau aehnelt dem eines Kreuzwortraetzel.\n" +
-						"- Anstelle von Buchstaben werden Ziffern verwendet.\n" +
-						"- Statt Wortdefinitionen werden Summen definiert.\n\n" +
-						"- Jede Summe darf nur aus den Ziffern von 1 bis 9 bestehen.\n" +
-						"- In jeder Summe (Zelle) darf jede Ziffer nur einmal vorkommen.\n" +
-						"- An jeder freien Stelle darf nur eine Ziffer eingetragen werden.\n",
-					"Regeln")
+					"- The structure is similar to a crossword puzzle.\n" +
+					"- Instead of letters numerals.\n" +
+					"- Instead of word definitions are defined sum.\n\n" +
+					"- Each total must consist only of the digits 1 to 9.\n" +
+					"- In each sum (cell) can occur each digit only once.\n" +
+					"- At each place, only one digit can be entered.\n",
+					"Rules")
 			}) { mnemonic = Key.A }
 		}
 	}
