@@ -1,0 +1,152 @@
+@(commandForm: Form[(String)], controller:controllers.KakuroWuiController)
+
+<!DOCTYPE html>
+
+@import controllers.KakuroWuiController
+@import helper._
+@import _root_.de.htwg.kakuro.model.Cell
+@import _root_.de.htwg.kakuro.model.SumCell
+
+@import de.htwg.kakuro.controller.ChangeCell
+@import de.htwg.kakuro.controller.CheckCell
+@import de.htwg.kakuro.controller.CheckCellsResult
+@import de.htwg.kakuro.controller.NewPlayField
+
+
+@input(color: String, field: Field, label: String, fieldType: Symbol = 'text) = {
+	<div class="control-group @if(field.hasErrors) {error}">
+		<label class="control-label" for="@field.id">@label</label>
+		<div class="controls">
+			<input type="@fieldType.name" value="@field.value" name="@field.id" id="cell" 
+				style="background-color: color; border-color: color"/>
+			@if(field.hasErrors){
+				<span class="help-inline">
+					@Messages(field.error.head.message)
+				</span>
+			}
+		</div>
+	</div>
+}
+
+@draw = {
+<div id="main">
+	<div id="outmost">
+		
+		<table class="highlightbutton">
+			<tr>
+				@form(action = routes.Application.check) {<input type="submit" id="submit" value="Check">}
+				@form(action = routes.Application.reset) {<input type="submit" id="submit" value="Reset">}
+			</tr>
+		</table>
+		<div>
+		
+		<div id="sepLine"></div>
+		
+		<div class="playFieldBorder">
+			<table class="playField">
+				@for(row <- 0 until controller.start.controller.model.row__){
+				<tr>
+					@for(column <- 0 until controller.start.controller.model.column__){
+					<td>
+						<div class="cellborder">
+							@{controller.start.controller.model.cells(row)(column) match { 
+								case c: Cell => {
+								
+									c.status match {
+										case 0 => {
+											if(c.toString != "")
+												<div class="cell" style="background-color: #ffffff; border-color: #ffffff">{c.toString}</div>	
+											else{
+												form(action = routes.Application.setValue(row, column), args = 'id -> "commandForm") {
+												      input("#ffffff", commandForm("value"), "")
+												}
+											}
+										}
+										case 1 => {
+											if(c.toString != "")
+												<div class="cell" style="background-color: #98Fb98; border-color: #98Fb98">{c.toString}</div>
+											else{
+												form(action = routes.Application.setValue(row, column), args = 'id -> "commandForm") {
+												      input("#98Fb98", commandForm("value"), "")
+												}
+											}
+										}
+										case 2 => {
+											if(c.toString != "")
+												<div class="cell" style="background-color: orange; border-color: orange">{c.toString}</div>
+											else{
+												form(action = routes.Application.setValue(row, column), args = 'id -> "commandForm") {
+												      input("orange", commandForm("value"), "")
+												}
+											}
+										}
+										case 3 => {
+											if(c.toString != "")
+												<div class="cell" style="background-color: #ff6347; border-color: #ff6347">{c.toString}</div>
+											else{
+												form(action = routes.Application.setValue(row, column), args = 'id -> "commandForm") {
+												      input("#ff6347", commandForm("value"), "")
+												}
+											}
+										}
+									}
+								} 
+								case c: SumCell => {
+									<div class="cellSum">{c.toString}</div>
+								} 
+								case _ => {
+									<div class="cellEmpty">--</div>
+								} 
+							}}
+						</div>
+					</td> 
+					}
+				</tr>
+				}
+			</table>
+		</div>
+	</div>
+	
+	<div id="sepLine"></div>
+	
+	<table class="highlightbuttons">
+		<tr>
+			@form(action = routes.Application.level("app/data/level1.ini")) {<input type="submit" id="submit" value="Level1">}
+			@form(action = routes.Application.level("app/data/level2.ini")) {<input type="submit" id="submit" value="Level2">}
+			@form(action = routes.Application.level("app/data/level3.ini")) {<input type="submit" id="submit" value="Level3">}
+			@form(action = routes.Application.level("app/data/level4.ini")) {<input type="submit" id="submit" value="Level4">}
+			@form(action = routes.Application.level("app/data/solved.ini")) {<input type="submit" id="submit" value="Level solved">}
+		</tr>
+	</table>
+	
+</div>
+}
+
+@main(title = "Welcome to Kakuro") {
+	<meta http-equiv="refresh" content="no-cache" />
+	@controller.start.controller.listenTo(controller.start.controller)
+
+	<div style="color: silver">
+		@{controller.start.controller.reactions += {
+			case e: ChangeCell =>{ 
+				main(_)
+				println("1 --------------------------")
+			}
+			case e: NewPlayField =>{
+				main(_)
+				println("2 --------------------------")
+			}
+			case e: CheckCellsResult =>{
+				main(_)
+				println("3 --------------------------")
+			}
+			case e: CheckCell =>{
+				main(_)
+				println("4 --------------------------")
+			}
+		}}
+	</div>
+	
+	@draw
+
+}

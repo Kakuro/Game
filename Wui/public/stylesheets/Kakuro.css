@@ -1,0 +1,114 @@
+@CHARSET "ISO-8859-1";
+
+#sepLine {
+	height: 20px;
+	border-width: 2px;
+	border-spacing: 0px;
+}
+
+#submit {
+	font-weight: bold;
+	font-size: medium;
+	height: 50px;
+	width: 110px;
+	margin-right: 1cm;
+}
+
+#outmost {
+	margin:auto;
+	width:auto;
+	font-size: medium;
+	font-style: oblique;
+	font-family: monospace;
+	background-color: silver;
+}
+
+table.playField {
+	margin: auto;
+	background-color: silver;
+
+	border-style: outset;
+	border-width: 0px;
+	border-spacing: 2px;
+	border-color: silver;
+
+}
+
+div.playFieldBorder {
+	margin: auto;
+	background-color: black;
+
+	border-style: outset;
+	border-width: 15px;
+	border-spacing: 2px;
+	border-color: black;
+
+}
+div.cellborder1 {
+	border-style: outset;
+	border-width: 2px;
+	border-spacing: 0px;
+	padding: 0px;
+	border-color: silver;
+	background-color: #E0E0FF;
+}
+
+div.cell {
+	min-width: 46px;
+	height: 46px;
+	text-align: center;
+	font-size: 50px;
+	line-height: 45px;
+	
+	border-style: outset;
+	border-width: 2px;
+	border-spacing: 0px;
+	padding: 0px;
+	
+}
+
+#cell {
+	min-width: 100px;
+	height: 46px;
+	text-align: center;
+	font-size: 30px;
+	line-height: 45px;
+	max-width: 100px;
+
+	border-style: outset;
+	border-width: 2px;
+	border-spacing: 0px;
+	padding: 0px;
+}
+
+div.cellSum {
+	background-color: yellow;
+	min-width: 46px;
+	height: 46px;
+	text-align: center;
+	font-size: 30px;
+	line-height: 45px;	
+
+	border-style: outset;
+	border-width: 2px;
+	border-spacing: 0px;
+	padding: 0px;
+	border-color: yellow;
+}
+
+div.cellEmpty {
+	background-color: #000000;
+	min-width: 46px;
+	height: 46px;
+	text-align: center;
+	font-size: 30px;
+	padding: 0px;
+	border-width: 0px;
+	line-height: 45px;
+	
+	border-style: outset;
+	border-width: 2px;
+	border-spacing: 0px;
+	padding: 0px;
+	border-color: #000000;
+}
