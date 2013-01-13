@@ -1,9 +1,13 @@
 [0m[[0minfo[0m] [0mPlayFieldSpec[0m
 [0m[[0minfo[0m] [0m[0m
 [0m[[0minfo[0m] [0mA new PlayField with defalut field should[0m
+[0m[[0minfo[0m] [0m[32m+[0m have row and coumln != 0[0m
+[0m[[0minfo[0m] [0m[32m+[0m have check false[0m
+[0m[[0minfo[0m] [0m[32m+[0m new field[0m
+[0m[[0minfo[0m] [0m[32m+[0m generate a String of the form != null[0m
 [0m[[0minfo[0m] [0m [0m
 [0m[[0minfo[0m] [0m [0m
 [0m[[0minfo[0m] [0mTotal for specification PlayFieldSpec[0m
-[0m[[0minfo[0m] [0m[34mFinished in 726 ms[0m[0m
-[0m[[0minfo[0m] [0m[34m0 example, 0 failure, 0 error[0m[0m
+[0m[[0minfo[0m] [0m[34mFinished in 62 ms[0m[0m
+[0m[[0minfo[0m] [0m[34m4 examples, 0 failure, 0 error[0m[0m
 [0m[[0minfo[0m] [0m[0m

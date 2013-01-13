@@ -1,6 +1,9 @@
 [0m[[0mdebug[0m] [0mCopy resource mappings: [0m
 [0m[[0mdebug[0m] [0m	(C:\Users\andrej\git\Kakuro\Kakuro\src\main\resources\data,C:\Users\andrej\git\Kakuro\Kakuro\target\scala-2.9.1\classes\data)[0m
 [0m[[0mdebug[0m] [0m	(C:\Users\andrej\git\Kakuro\Kakuro\src\main\resources\data\default.ini,C:\Users\andrej\git\Kakuro\Kakuro\target\scala-2.9.1\classes\data\default.ini)[0m
+[0m[[0mdebug[0m] [0m	(C:\Users\andrej\git\Kakuro\Kakuro\src\main\resources\data\default1.ini,C:\Users\andrej\git\Kakuro\Kakuro\target\scala-2.9.1\classes\data\default1.ini)[0m
+[0m[[0mdebug[0m] [0m	(C:\Users\andrej\git\Kakuro\Kakuro\src\main\resources\data\default2.ini,C:\Users\andrej\git\Kakuro\Kakuro\target\scala-2.9.1\classes\data\default2.ini)[0m
+[0m[[0mdebug[0m] [0m	(C:\Users\andrej\git\Kakuro\Kakuro\src\main\resources\data\default3.ini,C:\Users\andrej\git\Kakuro\Kakuro\target\scala-2.9.1\classes\data\default3.ini)[0m
 [0m[[0mdebug[0m] [0m	(C:\Users\andrej\git\Kakuro\Kakuro\src\main\resources\data\icon.png,C:\Users\andrej\git\Kakuro\Kakuro\target\scala-2.9.1\classes\data\icon.png)[0m
 [0m[[0mdebug[0m] [0m	(C:\Users\andrej\git\Kakuro\Kakuro\src\main\resources\data\level1.ini,C:\Users\andrej\git\Kakuro\Kakuro\target\scala-2.9.1\classes\data\level1.ini)[0m
 [0m[[0mdebug[0m] [0m	(C:\Users\andrej\git\Kakuro\Kakuro\src\main\resources\data\level2.ini,C:\Users\andrej\git\Kakuro\Kakuro\target\scala-2.9.1\classes\data\level2.ini)[0m

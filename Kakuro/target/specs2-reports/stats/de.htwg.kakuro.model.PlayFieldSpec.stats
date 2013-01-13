@@ -1,1 +1,18 @@
 <de.htwg.kakuro.model.PlayFieldSpec-stats timestamp="1357839809688"><stats time="283"></stats></de.htwg.kakuro.model.PlayFieldSpec-stats>
+<de.htwg.kakuro.model.PlayFieldSpec-stats timestamp="1358101045149"><stats time="1107"><trend><stats expectations="-1" time="1107"></stats></trend></stats></de.htwg.kakuro.model.PlayFieldSpec-stats>
+<de.htwg.kakuro.model.PlayFieldSpec-stats timestamp="1358101422843"><stats time="185"><trend><stats expectations="-1" time="185"></stats></trend></stats></de.htwg.kakuro.model.PlayFieldSpec-stats>
+<de.htwg.kakuro.model.PlayFieldSpec-stats timestamp="1358101505135"><stats time="220"><trend><stats expectations="-1" time="220"></stats></trend></stats></de.htwg.kakuro.model.PlayFieldSpec-stats>
+<de.htwg.kakuro.model.PlayFieldSpec-stats timestamp="1358101709829"><stats time="280"><trend><stats expectations="-1" time="280"></stats></trend></stats></de.htwg.kakuro.model.PlayFieldSpec-stats>
+<de.htwg.kakuro.model.PlayFieldSpec-stats timestamp="1358101794633"><stats time="1"><trend><stats expectations="-1" time="1"></stats></trend></stats></de.htwg.kakuro.model.PlayFieldSpec-stats>
+<de.htwg.kakuro.model.PlayFieldSpec-stats timestamp="1358102458301"><stats time="669"><trend><stats expectations="-1" time="669"></stats></trend></stats></de.htwg.kakuro.model.PlayFieldSpec-stats>
+<de.htwg.kakuro.model.PlayFieldSpec-stats timestamp="1358102553887"><stats time="165"><trend><stats expectations="-1" time="165"></stats></trend></stats></de.htwg.kakuro.model.PlayFieldSpec-stats>
+<de.htwg.kakuro.model.PlayFieldSpec-results timestamp="1358106148319"><result location="de.htwg.kakuro.model.PlayFieldSpec (PlayFieldSpec.scala:16)" id="-1316831917"><stats expectations="1" examples="1" failures="1" time="235"></stats></result>
+</de.htwg.kakuro.model.PlayFieldSpec-results>
+<de.htwg.kakuro.model.PlayFieldSpec-stats timestamp="1358106148329"><stats expectations="4" successes="3" examples="4" failures="1" time="632"><trend><stats expectations="3" successes="3" examples="4" failures="1" time="632"></stats></trend></stats></de.htwg.kakuro.model.PlayFieldSpec-stats>
+<de.htwg.kakuro.model.PlayFieldSpec-results timestamp="1358106213264"><result location="de.htwg.kakuro.model.PlayFieldSpec (PlayFieldSpec.scala:16)" id="-1316831917"><stats expectations="1" examples="1" failures="1" time="180"></stats></result>
+</de.htwg.kakuro.model.PlayFieldSpec-results>
+<de.htwg.kakuro.model.PlayFieldSpec-stats timestamp="1358106213279"><stats expectations="4" successes="3" examples="4" failures="1" time="257"></stats></de.htwg.kakuro.model.PlayFieldSpec-stats>
+<de.htwg.kakuro.model.PlayFieldSpec-stats timestamp="1358106264559"><stats expectations="4" examples="4" successes="4" time="256"><trend><stats failures="-1" successes="1" time="256"></stats></trend></stats></de.htwg.kakuro.model.PlayFieldSpec-stats>
+<de.htwg.kakuro.model.PlayFieldSpec-stats timestamp="1358106354604"><stats expectations="4" examples="4" successes="4" time="98"></stats></de.htwg.kakuro.model.PlayFieldSpec-stats>
+<de.htwg.kakuro.model.PlayFieldSpec-stats timestamp="1358106401084"><stats expectations="4" examples="4" successes="4" time="623"></stats></de.htwg.kakuro.model.PlayFieldSpec-stats>
+<de.htwg.kakuro.model.PlayFieldSpec-stats timestamp="1358106633503"><stats expectations="4" examples="4" successes="4" time="59"></stats></de.htwg.kakuro.model.PlayFieldSpec-stats>
