@@ -109,7 +109,7 @@ class Gui(controller: KakuroController) extends Frame {
 	menuBar = new MenuBar {
 		contents += new Menu("File") {
 			mnemonic = Key.F
-			contents += new MenuItem(Action("New") { controller.load("src/main/resources/data/easy.ini") }) { mnemonic = Key.N }
+			contents += new MenuItem(Action("New") { controller.load(controller.model.fileName) }) { mnemonic = Key.N }
 			contents += new MenuItem(Action("Load") {
 				val fileDialog = new FileChooser(new File(System.getProperty("user.dir"))) { fileFilter = new FileNameExtensionFilter("Kakuro", "ini") }
 				fileDialog.title = "Load new Game"
@@ -192,7 +192,7 @@ class Gui(controller: KakuroController) extends Frame {
 					case None =>
 				}
 			} else
-				Dialog.showMessage(contents.head, "Check Not Ok", title = "Check")
+//				Dialog.showMessage(contents.head, "Check Not Ok", title = "Check")
 			timer.start
 		}
 		case e: CheckCell => {

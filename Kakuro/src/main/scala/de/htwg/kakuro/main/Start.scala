@@ -7,12 +7,12 @@ import de.htwg.kakuro.view.gui.Gui
 
 object Start {
 
-	def main(args: Array[String]) {
+	val model = new PlayField
+	val controller = new KakuroController(model)
+	val tui = new Tui(controller)
+	val gui = new Gui(controller)
 
-		val model = new PlayField
-		val controller = new KakuroController(model)
-		val tui = new Tui(controller)
-		val gui = new Gui(controller)
+	def main(args: Array[String]) {
 
 		while (tui.display(readLine())) {}
 	}

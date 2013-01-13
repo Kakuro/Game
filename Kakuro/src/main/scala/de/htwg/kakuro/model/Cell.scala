@@ -9,7 +9,15 @@ package de.htwg.kakuro.model
 class Cell(row: Int, column: Int) extends AbstractCell {
 
 	var value = 0
-
+	
+	/**
+	 * 0 = none
+	 * 1 = true
+	 * 2 = multiple
+	 * 3 = false
+	 */
+	var status = 0
+	
 	//set value
 	def <==(v: Int) = value = v
 

@@ -20,7 +20,9 @@ class Tui(var controller: KakuroController) extends Reactor {
 	}
 
 	def update = {
-		println("=============================================================")
+		println("+========+")
+		println("| Kakuro |")
+		println("+========+")
 		println(controller.model.toString)
 		println("\nEnter command:")
 		println("\nrow coulumn value = set value")
@@ -39,7 +41,7 @@ class Tui(var controller: KakuroController) extends Reactor {
 			case "n" =>
 				//				println("Please file name:")
 				//				var filename = readLine
-				controller.load("src/main/resources/data/easy.ini")
+				controller.load("src/main/resources/data/default.ini")
 			case "c" => controller.check
 			case "r" => controller.reset
 			case i: String if (i.split(" ").toList.length == 3) =>

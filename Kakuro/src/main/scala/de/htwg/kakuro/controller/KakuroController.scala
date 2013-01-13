@@ -8,8 +8,8 @@ import _root_.de.htwg.kakuro.model.SumCell
 import scala.collection.mutable.ListBuffer
 import com.sun.org.apache.xalan.internal.xsltc.compiler.ForEach
 
-case class ChangeCell extends Event
-case class NewPlayField extends Event
+case class ChangeCell() extends Event
+case class NewPlayField() extends Event
 case class CheckCell(result: String) extends Event
 case class CheckCellsResult(result: Boolean) extends Event
 

@@ -1,7 +1,8 @@
 package de.htwg.kakuro.model
 
-import scala.io.Source
 import scala.collection.mutable.ListBuffer
+import scala.io.Source
+import scala.util.Random
 /**
  * Class PlayField: Describes the playfield
  *
@@ -13,7 +14,11 @@ class PlayField() {
 	var scoreList: List[String] = List()
 	var row__ = 0
 	var column__ = 0
-	var fileName = "src/main/resources/data/default.ini"
+	
+	// load random default level
+	val srandom = new Random(System.currentTimeMillis())
+	val range = 1 to 3
+	var fileName = "src/main/resources/data/default"+ range(srandom.nextInt(range length)) +".ini"
 	load(fileName)
 
 	// resetting the complete field
@@ -110,11 +115,6 @@ class PlayField() {
 			arraySum = new Array[Int](column__)
 		}
 
-		//		tempSum = 0
-		//		arraySum = new Array[Int](row__)
-		//
-		//		isCellValid = true
-
 		// check all column
 		for (column <- 0 until column__) {
 			for (row <- 0 until row__) {
@@ -164,7 +164,51 @@ class PlayField() {
 		if (cellsCount == cellsCountHelp)
 			allCellsOk = true
 
+		val cellFalseRow = "False row ([1-9]*[0-9]*[0-9]), column from ([1-9]*[0-9]*[0-9]) to ([1-9]*[0-9]*[0-9])".r
+		val cellFalseColumn = "False column ([1-9]*[0-9]*[0-9]), row from ([1-9]*[0-9]*[0-9]) to ([1-9]*[0-9]*[0-9])".r
+
+		val cellMultipleRow = "Multiple number: row ([1-9]*[0-9]*[0-9]), column from ([1-9]*[0-9]*[0-9]) to ([1-9]*[0-9]*[0-9])".r
+		val cellMultipleColumn = "Multiple number: column ([1-9]*[0-9]*[0-9]), row from ([1-9]*[0-9]*[0-9]) to ([1-9]*[0-9]*[0-9])".r
+
+		cells.foreach { row =>
+			row.foreach { column =>
+				column match {
+					case c: Cell => c.status = 0
+					case _ =>
+				}
+			}
+		}
+		
+		result.sortWith(_ < _).foreach(f => f.split("	").toList.filter(c => c != ' ').map(c => c match {
+			case cellFalseRow(row, columnFrom, columnTo) => helpCheck(true, row.toInt, columnFrom.toInt, columnTo.toInt, 3)
+			case cellFalseColumn(column, rowFrom, rowTo) => helpCheck(false, column.toInt, rowFrom.toInt, rowTo.toInt, 3)
+			case cellTrueRow(row, columnFrom, columnTo) => helpCheck(true, row.toInt, columnFrom.toInt, columnTo.toInt, 1)
+			case cellTrueColumn(column, rowFrom, rowTo) => helpCheck(false, column.toInt, rowFrom.toInt, rowTo.toInt, 1)
+			case cellMultipleRow(row, columnFrom, columnTo) => helpCheck(true, row.toInt, columnFrom.toInt, columnTo.toInt, 2)
+			case cellMultipleColumn(column, rowFrom, rowTo) => helpCheck(false, column.toInt, rowFrom.toInt, rowTo.toInt, 2)
+			case _ =>
+		}))
+
 		(result.sortWith(_ < _), allCellsOk)
+	}
+
+	def helpCheck(rowOr: Boolean, rowOrColumn: Int, from: Int, to: Int, _status: Int) {
+
+		if (rowOr) {
+			for (column <- from until to + 1) {
+				cells(rowOrColumn)(column) match {
+					case c: Cell =>
+						c.status = _status
+				}
+			}
+		} else {
+			for (row <- from until to + 1) {
+				cells(row)(rowOrColumn) match {
+					case c: Cell =>
+						c.status = _status
+				}
+			}
+		}
 	}
 
 	def load(name: String) = {
