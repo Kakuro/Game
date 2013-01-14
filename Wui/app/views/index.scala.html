@@ -29,82 +29,89 @@
 }
 
 @draw = {
+
 <div id="main">
+
+	@form(action = routes.Application.loadFile, 'enctype -> "multipart/form-data") {
+	   <input type="file" class="load" name="filename" value="New Game" onchange='this.form.submit()'>
+	   <noscript><input type="submit" value="Hoch laden"></noscript>
+	}
+
+	<div id="sepLine"></div>
+	
 	<div id="outmost">
-		
 		<table class="highlightbutton">
 			<tr>
 				@form(action = routes.Application.check) {<input type="submit" id="submit" value="Check">}
 				@form(action = routes.Application.reset) {<input type="submit" id="submit" value="Reset">}
 			</tr>
 		</table>
-		<div>
+	</div>
 		
-		<div id="sepLine"></div>
-		
-		<div class="playFieldBorder">
-			<table class="playField">
-				@for(row <- 0 until controller.start.controller.model.row__){
-				<tr>
-					@for(column <- 0 until controller.start.controller.model.column__){
-					<td>
-						<div class="cellborder">
-							@{controller.start.controller.model.cells(row)(column) match { 
-								case c: Cell => {
-								
-									c.status match {
-										case 0 => {
-											if(c.toString != "")
-												<div class="cell" style="background-color: #ffffff; border-color: #ffffff">{c.toString}</div>	
-											else{
-												form(action = routes.Application.setValue(row, column), args = 'id -> "commandForm") {
-												      input("#ffffff", commandForm("value"), "")
-												}
-											}
-										}
-										case 1 => {
-											if(c.toString != "")
-												<div class="cell" style="background-color: #98Fb98; border-color: #98Fb98">{c.toString}</div>
-											else{
-												form(action = routes.Application.setValue(row, column), args = 'id -> "commandForm") {
-												      input("#98Fb98", commandForm("value"), "")
-												}
-											}
-										}
-										case 2 => {
-											if(c.toString != "")
-												<div class="cell" style="background-color: orange; border-color: orange">{c.toString}</div>
-											else{
-												form(action = routes.Application.setValue(row, column), args = 'id -> "commandForm") {
-												      input("orange", commandForm("value"), "")
-												}
-											}
-										}
-										case 3 => {
-											if(c.toString != "")
-												<div class="cell" style="background-color: #ff6347; border-color: #ff6347">{c.toString}</div>
-											else{
-												form(action = routes.Application.setValue(row, column), args = 'id -> "commandForm") {
-												      input("#ff6347", commandForm("value"), "")
-												}
+	<div id="sepLine"></div>
+	
+	<div class="playFieldBorder">
+		<table class="playField">
+			@for(row <- 0 until controller.start.controller.model.row__){
+			<tr>
+				@for(column <- 0 until controller.start.controller.model.column__){
+				<td>
+					<div class="cellborder">
+						@{controller.start.controller.model.cells(row)(column) match { 
+							case c: Cell => {
+							
+								c.status match {
+									case 0 => {
+										if(c.toString != "")
+											<div class="cell" style="background-color: #ffffff; border-color: #ffffff">{c.toString}</div>	
+										else{
+											form(action = routes.Application.setValue(row, column), args = 'id -> "commandForm") {
+											      input("#ffffff", commandForm("value"), "")
 											}
 										}
 									}
-								} 
-								case c: SumCell => {
-									<div class="cellSum">{c.toString}</div>
-								} 
-								case _ => {
-									<div class="cellEmpty">--</div>
-								} 
-							}}
-						</div>
-					</td> 
-					}
-				</tr>
+									case 1 => {
+										if(c.toString != "")
+											<div class="cell" style="background-color: #98Fb98; border-color: #98Fb98">{c.toString}</div>
+										else{
+											form(action = routes.Application.setValue(row, column), args = 'id -> "commandForm") {
+											      input("#98Fb98", commandForm("value"), "")
+											}
+										}
+									}
+									case 2 => {
+										if(c.toString != "")
+											<div class="cell" style="background-color: orange; border-color: orange">{c.toString}</div>
+										else{
+											form(action = routes.Application.setValue(row, column), args = 'id -> "commandForm") {
+											      input("orange", commandForm("value"), "")
+											}
+										}
+									}
+									case 3 => {
+										if(c.toString != "")
+											<div class="cell" style="background-color: #ff6347; border-color: #ff6347">{c.toString}</div>
+										else{
+											form(action = routes.Application.setValue(row, column), args = 'id -> "commandForm") {
+											      input("#ff6347", commandForm("value"), "")
+											}
+										}
+									}
+								}
+							} 
+							case c: SumCell => {
+								<div class="cellSum">{c.toString}</div>
+							} 
+							case _ => {
+								<div class="cellEmpty">--</div>
+							} 
+						}}
+					</div>
+				</td> 
 				}
-			</table>
-		</div>
+			</tr>
+			}
+		</table>
 	</div>
 	
 	<div id="sepLine"></div>
@@ -128,7 +135,7 @@
 
 	<div style="color: silver">
 		@{controller.start.controller.reactions += {
-			case e: ChangeCell => { 
+			case e: ChangeCell => {
 			}
 			case e: NewPlayField =>{
 			}

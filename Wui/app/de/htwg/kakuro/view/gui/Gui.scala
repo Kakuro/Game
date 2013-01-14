@@ -182,18 +182,18 @@ class Gui(controller: KakuroController) extends Frame {
 		case e: ChangeCell => drawNew
 		case e: NewPlayField => drawNew
 		case e: CheckCellsResult => {
-			timer.stop
-			if (e.result == true) {
-				val r = Dialog.showInput(contents.head, "Check Ok", initial = "Enter your name")
-				r match {
-					case Some(s) =>
-						controller.model.scoreList ::= "Name: " + s + ", with Time : " + timeStamp.toString + " sec."
-						timeStamp = 0
-					case None =>
-				}
-			} else
+//			timer.stop
+//			if (e.result == true) {
+//				val r = Dialog.showInput(contents.head, "Check Ok", initial = "Enter your name")
+//				r match {
+//					case Some(s) =>
+//						controller.model.scoreList ::= "Name: " + s + ", with Time : " + timeStamp.toString + " sec."
+//						timeStamp = 0
+//					case None =>
+//				}
+//			} else
 //				Dialog.showMessage(contents.head, "Check Not Ok", title = "Check")
-			timer.start
+//			timer.start
 		}
 		case e: CheckCell => {
 
@@ -219,53 +219,53 @@ class Gui(controller: KakuroController) extends Frame {
 	}
 
 	// BoxPanel on the top with two buttons and a label
-	var timeStamp = 0;
-	var timer: javax.swing.Timer = null
+//	var timeStamp = 0;
+//	var timer: javax.swing.Timer = null
 	def boxPanel = new BoxPanel(Orientation.Horizontal) {
 
 		background = style.background
 
 		// timer
-		val label = new Label {
-			font = new Font("Serif", Font.BOLD, 20)
-			Alignment.Right
-			foreground = java.awt.Color.WHITE
-		}
+//		val label = new Label {
+//			font = new Font("Serif", Font.BOLD, 20)
+//			Alignment.Right
+//			foreground = java.awt.Color.WHITE
+//		}
+//
+//		val timerlistener = new java.awt.event.ActionListener() {
+//			def actionPerformed(evt: java.awt.event.ActionEvent) {
+//				timeStamp += 1
+//				label.text = "Time : " + timeStamp.toString + " sec."
+//			}
+//		}
 
-		val timerlistener = new java.awt.event.ActionListener() {
-			def actionPerformed(evt: java.awt.event.ActionEvent) {
-				timeStamp += 1
-				label.text = "Time : " + timeStamp.toString + " sec."
-			}
-		}
-
-		if (timer != null) timer.stop()
-
-		timer = new javax.swing.Timer(1000, timerlistener)
-		timer.start()
+//		if (timer != null) timer.stop()
+//
+//		timer = new javax.swing.Timer(1000, timerlistener)
+//		timer.start()
 
 		contents += new Button(Action("Check") { controller.check })
 		contents += Swing.HStrut(20)
-		contents += new Button(Action("Reset") { controller.reset; timeStamp = 0 })
+		contents += new Button(Action("Reset") { controller.reset; /*timeStamp = 0*/ })
 		contents += Swing.HStrut(20)
-		contents += new Button(Action("Score") { new Score(controller.model.scoreList) })
-		contents += Swing.Glue
-		contents += label
+//		contents += new Button(Action("Score") { new Score(controller.model.scoreList) })
+//		contents += Swing.Glue
+//		contents += label
 		border = Swing.EmptyBorder(10, 10, 10, 10)
 	}
 
 	def flowPanel = new FlowPanel {
 		background = style.background
 		border = Swing.EmptyBorder(10, 10, 10, 10)
-		contents += new Button(Action("Level 1") { controller.load("app/data/level1.ini"); timeStamp = 0 })
+		contents += new Button(Action("Level 1") { controller.load("app/data/level1.ini"); /*timeStamp = 0*/ })
 		contents += Swing.HStrut(20)
-		contents += new Button(Action("Level 2") { controller.load("app/data/level2.ini"); timeStamp = 0 })
+		contents += new Button(Action("Level 2") { controller.load("app/data/level2.ini"); /*timeStamp = 0*/ })
 		contents += Swing.HStrut(20)
-		contents += new Button(Action("Level 3") { controller.load("app/data/level3.ini"); timeStamp = 0 })
+		contents += new Button(Action("Level 3") { controller.load("app/data/level3.ini"); /*timeStamp = 0*/ })
 		contents += Swing.HStrut(20)
-		contents += new Button(Action("Level 4") { controller.load("app/data/level4.ini"); timeStamp = 0 })
+		contents += new Button(Action("Level 4") { controller.load("app/data/level4.ini");/* timeStamp = 0*/ })
 		contents += Swing.HStrut(20)
-		contents += new Button(Action("Level solved") { controller.load("app/data/solved.ini"); timeStamp = 0 })
+		contents += new Button(Action("Level solved") { controller.load("app/data/solved.ini"); /*timeStamp = 0*/ })
 	}
 
 	contents = new BorderPanel {
