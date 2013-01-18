@@ -9,3 +9,6 @@
 <de.htwg.kakuro.model.SumCellSpec-stats timestamp="1358106354267"><stats expectations="10" examples="10" successes="10" time="523"></stats></de.htwg.kakuro.model.SumCellSpec-stats>
 <de.htwg.kakuro.model.SumCellSpec-stats timestamp="1358106401294"><stats expectations="10" examples="10" successes="10" time="35"></stats></de.htwg.kakuro.model.SumCellSpec-stats>
 <de.htwg.kakuro.model.SumCellSpec-stats timestamp="1358106632997"><stats expectations="10" examples="10" successes="10" time="368"></stats></de.htwg.kakuro.model.SumCellSpec-stats>
+<de.htwg.kakuro.model.SumCellSpec-stats timestamp="1358341335915"><stats expectations="10" examples="10" successes="10" time="2418"></stats></de.htwg.kakuro.model.SumCellSpec-stats>
+<de.htwg.kakuro.model.SumCellSpec-stats timestamp="1358344187732"><stats expectations="10" examples="10" successes="10" time="1445"></stats></de.htwg.kakuro.model.SumCellSpec-stats>
+<de.htwg.kakuro.model.SumCellSpec-stats timestamp="1358499699752"><stats expectations="10" examples="10" successes="10" time="2381"></stats></de.htwg.kakuro.model.SumCellSpec-stats>
