@@ -12,7 +12,6 @@
 @import de.htwg.kakuro.controller.CheckCellsResult
 @import de.htwg.kakuro.controller.NewPlayField
 
-
 @input(color: String, field: Field, label: String, fieldType: Symbol = 'text) = {
 	<div class="control-group @if(field.hasErrors) {error}">
 		<label class="control-label" for="@field.id">@label</label>
@@ -131,6 +130,7 @@
 
 @main(title = "Welcome to Kakuro") {
 	<meta http-equiv="refresh" content="no-cache" />
+
 	@controller.start.controller.listenTo(controller.start.controller)
 
 	<div style="color: silver">

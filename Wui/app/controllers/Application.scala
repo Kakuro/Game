@@ -11,16 +11,43 @@ import java.awt.Frame
 import scala.swing.Dialog
 import play.Play
 
+import de.htwg.kakuro.controller.ChangeCell
+import de.htwg.kakuro.controller.CheckCell
+import de.htwg.kakuro.controller.CheckCellsResult
+import de.htwg.kakuro.controller.NewPlayField
+
 object Application extends Controller {
 
 	val controller = new controllers.KakuroWuiController
 	val filePath = "app/data/"
-		
-	
+
 	val commandForm = Form("value" -> nonEmptyText)
 
 	def index = Action {
 		Ok(views.html.index(commandForm, controller))
+	}
+
+	controller.start.controller.reactions += {
+		case e: ChangeCell => {
+			Action { Ok(views.html.index(commandForm, controller)) }
+			routes.Application.index
+//			println("#############################")
+		}
+		case e: NewPlayField => {
+			Action { Ok(views.html.index(commandForm, controller)) }
+			routes.Application.index
+//			println("#############################")
+		}
+		case e: CheckCellsResult => {
+			Action { Ok(views.html.index(commandForm, controller)) }
+			routes.Application.index
+//			println("#############################")
+		}
+		case e: CheckCell => {
+			Action { Ok(views.html.index(commandForm, controller)) }
+			routes.Application.index
+//			println("#############################")
+		}
 	}
 
 	def loadFile = Action(parse.multipartFormData) { request =>
@@ -33,7 +60,7 @@ object Application extends Controller {
 				"error" -> "Missing file")
 		}
 	}
-	
+
 	def setValue(row: Int, column: Int) = Action { implicit request =>
 		{
 			commandForm.bindFromRequest.fold(
